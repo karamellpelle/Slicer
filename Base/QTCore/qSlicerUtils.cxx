@@ -18,14 +18,14 @@
 
 ==============================================================================*/
 
-// QT includes
+// Qt includes
 #include <QDebug>
 #include <QDir>
 #include <QFileInfo>
 #include <QRegExp>
 #include <QStringList>
 
-// SlicerQt includes
+// Slicer includes
 #include "qSlicerUtils.h"
 
 // SlicerLogic includes

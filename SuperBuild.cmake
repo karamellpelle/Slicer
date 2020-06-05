@@ -342,18 +342,18 @@ list_conditional_append(Slicer_BUILD_CompareVolumes Slicer_REMOTE_DEPENDENCIES C
 
 # Disable this module until it can be ported to the new markups code
 # Tracked at https://github.com/pieper/LandmarkRegistration/issues/29
-#Slicer_Remote_Add(LandmarkRegistration
-#  GIT_REPOSITORY "${EP_GIT_PROTOCOL}://github.com/pieper/LandmarkRegistration"
-#  GIT_TAG 1e1c706a3c9445cb32116ff899201b445d041c4a
-#  OPTION_NAME Slicer_BUILD_LandmarkRegistration
-#  OPTION_DEPENDS "Slicer_BUILD_CompareVolumes;Slicer_USE_PYTHONQT"
-#  LABELS REMOTE_MODULE
-#  )
-#list_conditional_append(Slicer_BUILD_LandmarkRegistration Slicer_REMOTE_DEPENDENCIES LandmarkRegistration)
+Slicer_Remote_Add(LandmarkRegistration
+  GIT_REPOSITORY "${EP_GIT_PROTOCOL}://github.com/pieper/LandmarkRegistration"
+  GIT_TAG c1385ba2cd5069a018cd97c19085788006276918
+  OPTION_NAME Slicer_BUILD_LandmarkRegistration
+  OPTION_DEPENDS "Slicer_BUILD_CompareVolumes;Slicer_USE_PYTHONQT"
+  LABELS REMOTE_MODULE
+ )
+list_conditional_append(Slicer_BUILD_LandmarkRegistration Slicer_REMOTE_DEPENDENCIES LandmarkRegistration)
 
 Slicer_Remote_Add(SurfaceToolbox
   GIT_REPOSITORY "${EP_GIT_PROTOCOL}://github.com/Slicer/SlicerSurfaceToolbox"
-  GIT_TAG ec6fe416b0db39d266b256bd9a2f735df2b006fa
+  GIT_TAG 86827c575efe77fe56c757029917387673ee7afd
   OPTION_NAME Slicer_BUILD_SurfaceToolbox
   OPTION_DEPENDS "Slicer_USE_PYTHONQT"
   LABELS REMOTE_MODULE

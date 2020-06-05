@@ -18,7 +18,7 @@
 
 ==============================================================================*/
 
-// QT includes
+// Qt includes
 #include <QButtonGroup>
 
 // qMRML includes
@@ -119,8 +119,7 @@ qMRMLClipNodeWidget::qMRMLClipNodeWidget(QWidget *_parent)
 }
 
 //------------------------------------------------------------------------------
-qMRMLClipNodeWidget::~qMRMLClipNodeWidget()
-= default;
+qMRMLClipNodeWidget::~qMRMLClipNodeWidget() = default;
 
 //------------------------------------------------------------------------------
 vtkMRMLClipModelsNode* qMRMLClipNodeWidget::mrmlClipNode()const

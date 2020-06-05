@@ -34,7 +34,7 @@
 #include "ctkComboBox.h"
 #include "ctkMenuComboBox.h"
 
-// SlicerQt includes
+// Slicer includes
 #include "qSlicerModuleSelectorToolBar.h"
 #include "qSlicerModulesMenu.h"
 
@@ -190,8 +190,7 @@ qSlicerModuleSelectorToolBar::qSlicerModuleSelectorToolBar(QWidget* parentWidget
 }
 
 //---------------------------------------------------------------------------
-qSlicerModuleSelectorToolBar::~qSlicerModuleSelectorToolBar()
-= default;
+qSlicerModuleSelectorToolBar::~qSlicerModuleSelectorToolBar() = default;
 
 //---------------------------------------------------------------------------
 qSlicerModulesMenu* qSlicerModuleSelectorToolBar::modulesMenu()const

@@ -26,7 +26,7 @@ limitations under the License.
 #include <vtkStringArray.h>
 #include <vtksys/SystemTools.hxx>
 
-// QT includes
+// Qt includes
 #include <QDateTime>
 #include <QDebug>
 #include <QDir>
@@ -42,14 +42,10 @@ static const char NODE_BASE_NAME_SEPARATOR[] = "-";
 vtkMRMLNodeNewMacro(vtkMRMLSequenceStorageNode);
 
 //----------------------------------------------------------------------------
-vtkMRMLSequenceStorageNode::vtkMRMLSequenceStorageNode()
-{
-}
+vtkMRMLSequenceStorageNode::vtkMRMLSequenceStorageNode() = default;
 
 //----------------------------------------------------------------------------
-vtkMRMLSequenceStorageNode::~vtkMRMLSequenceStorageNode()
-{
-}
+vtkMRMLSequenceStorageNode::~vtkMRMLSequenceStorageNode() = default;
 
 //----------------------------------------------------------------------------
 void vtkMRMLSequenceStorageNode::PrintSelf(ostream& os, vtkIndent indent)

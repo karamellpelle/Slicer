@@ -71,6 +71,7 @@ class  VTK_SLICER_MARKUPS_MODULE_MRML_EXPORT vtkMRMLMarkupsNode : public vtkMRML
   /// Make the storage node a friend so that ReadDataInternal can set the ControlPoint ids
   friend class vtkMRMLMarkupsStorageNode;
   friend class vtkMRMLMarkupsFiducialStorageNode;
+  friend class vtkMRMLMarkupsJsonStorageNode;
 
 public:
 
@@ -220,8 +221,12 @@ public:
   {
     PositionUndefined,
     PositionPreview,
-    PositionDefined
+    PositionDefined,
+    PositionStatus_Last
   };
+
+  static const char* GetPositionStatusAsString(int id);
+  static int GetPositionStatusFromString(const char* name);
 
   /// Clear out the node of all control points
   virtual void RemoveAllControlPoints();
@@ -254,7 +259,7 @@ public:
   /// Return the number of control points that are stored in this node
   int GetNumberOfControlPoints();
   /// Return the number of control points that are already placed (not being previewed or undefined).
-  int GetNumberOfDefinedControlPoints();
+  int GetNumberOfDefinedControlPoints(bool includePreview=false);
   /// \deprecated Use GetNumberOfControlPoints() instead.
   int GetNumberOfMarkups() { return this->GetNumberOfControlPoints(); };
   /// \deprecated Use GetNumberOfControlPoints() instead.
@@ -266,6 +271,8 @@ public:
   /// Add n control points.
   /// If point is specified then all control point positions will be initialized to that position,
   /// otherwise control poin positions are initialized to (0,0,0).
+  /// If requested number of points would result more points than the maximum allowed number of points
+  /// then no points are added at all.
   /// Return index of the last placed control point, -1 on failure.
   int AddNControlPoints(int n, std::string label = std::string(), vtkVector3d* point = nullptr);
   /// Add a new control point, defined in the world coordinate system.
@@ -275,8 +282,10 @@ public:
   int AddControlPoint(vtkVector3d point, std::string label = std::string());
   /// Add a controlPoint to the end of the list. Return index
   /// of new controlPoint, -1 on failure.
-  /// Markups node takes over ownership of the pointer (markups node will delete it).
-  int AddControlPoint(ControlPoint *controlPoint);
+  /// Markups node takes over ownership of the pointer (markups node will delete it)
+  /// \param autoLabel: if enabled (by default it is) then empty point label will be
+  /// replaced with automatically generated label.
+  int AddControlPoint(ControlPoint *controlPoint, bool autoLabel=true);
 
   /// Get the position of the Nth control point
   /// returning it as a vtkVector3d, return (0,0,0) if not found
@@ -567,6 +576,8 @@ public:
   /// 4x4 matrix detailing the orientation and position in world coordinates of the interaction handles.
   virtual vtkMatrix4x4* GetInteractionHandleToWorldMatrix();
 
+  virtual std::string GetPropertiesLabelText();
+
 protected:
   vtkMRMLMarkupsNode();
   ~vtkMRMLMarkupsNode() override;
@@ -637,9 +648,6 @@ protected:
   // Line cells connect all points into a curve.
   vtkSmartPointer<vtkPolyData> CurveInputPoly;
 
-  vtkSmartPointer<vtkTransformPolyDataFilter> CurveInputPolyToWorldTransformer;
-  vtkSmartPointer<vtkGeneralTransform> CurveInputPolyToWorldTransform;
-
   vtkSmartPointer<vtkTransformPolyDataFilter> CurvePolyToWorldTransformer;
   vtkSmartPointer<vtkGeneralTransform> CurvePolyToWorldTransform;
 
@@ -662,6 +670,8 @@ protected:
   vtkVector3d CenterPos;
 
   std::vector< vtkSmartPointer<vtkMRMLMeasurement> > Measurements;
+
+  std::string PropertiesLabelText;
 
   // Transform that moves the xyz unit vectors and origin of the interaction handles to local coordinates
   vtkSmartPointer<vtkMatrix4x4> InteractionHandleToWorldMatrix;

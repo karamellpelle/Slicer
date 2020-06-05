@@ -20,7 +20,7 @@
 
 // Qt includes
 
-// SlicerQT includes
+// Slicer includes
 #include "qSlicerCLILoadableModuleFactory.h"
 #include "qSlicerCLIModule.h"
 #include "qSlicerCLIModuleFactoryHelper.h"
@@ -300,8 +300,7 @@ qSlicerCLILoadableModuleFactory::qSlicerCLILoadableModuleFactory()
 }
 
 //-----------------------------------------------------------------------------
-qSlicerCLILoadableModuleFactory::~qSlicerCLILoadableModuleFactory()
-= default;
+qSlicerCLILoadableModuleFactory::~qSlicerCLILoadableModuleFactory() = default;
 
 //-----------------------------------------------------------------------------
 void qSlicerCLILoadableModuleFactory::registerItems()

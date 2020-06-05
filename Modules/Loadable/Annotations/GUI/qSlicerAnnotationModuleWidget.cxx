@@ -6,7 +6,7 @@
 
 // CTK includes
 #include "ctkCollapsibleButton.h"
-// QT includes
+// Qt includes
 #include <QButtonGroup>
 #include <QList>
 #include <QFontMetrics>
@@ -81,8 +81,7 @@ qSlicerAnnotationModuleWidgetPrivate::qSlicerAnnotationModuleWidgetPrivate(qSlic
 }
 
 //-----------------------------------------------------------------------------
-qSlicerAnnotationModuleWidgetPrivate::~qSlicerAnnotationModuleWidgetPrivate()
-= default;
+qSlicerAnnotationModuleWidgetPrivate::~qSlicerAnnotationModuleWidgetPrivate() = default;
 
 //-----------------------------------------------------------------------------
 // qSlicerAnnotationModuleWidgetPrivate methods

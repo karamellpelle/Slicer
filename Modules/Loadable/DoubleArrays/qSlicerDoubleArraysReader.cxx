@@ -21,7 +21,7 @@
 // Qt includes
 #include <QFileInfo>
 
-// SlicerQt includes
+// Slicer includes
 #include "qSlicerDoubleArraysReader.h"
 
 // Logic includes
@@ -57,8 +57,7 @@ qSlicerDoubleArraysReader
 }
 
 //-----------------------------------------------------------------------------
-qSlicerDoubleArraysReader::~qSlicerDoubleArraysReader()
-= default;
+qSlicerDoubleArraysReader::~qSlicerDoubleArraysReader() = default;
 
 //-----------------------------------------------------------------------------
 void qSlicerDoubleArraysReader::setLogic(vtkSlicerDoubleArraysLogic* logic)

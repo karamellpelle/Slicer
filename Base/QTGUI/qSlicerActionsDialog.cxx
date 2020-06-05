@@ -27,7 +27,7 @@
 #include <QWebEngineView>
 #endif
 
-// SlicerQt includes
+// Slicer includes
 #include "qSlicerActionsDialog.h"
 #include "qSlicerCoreApplication.h"
 #include "ui_qSlicerActionsDialog.h"
@@ -94,8 +94,7 @@ qSlicerActionsDialog::qSlicerActionsDialog(QWidget* parentWidget)
 }
 
 //------------------------------------------------------------------------------
-qSlicerActionsDialog::~qSlicerActionsDialog()
-= default;
+qSlicerActionsDialog::~qSlicerActionsDialog() = default;
 
 //------------------------------------------------------------------------------
 void qSlicerActionsDialog::addAction(QAction* action, const QString& group)

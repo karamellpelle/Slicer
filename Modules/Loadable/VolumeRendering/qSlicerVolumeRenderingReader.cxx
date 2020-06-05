@@ -21,7 +21,7 @@
 // Qt includes
 #include <QFileInfo>
 
-// SlicerQt includes
+// Slicer includes
 #include "qSlicerVolumeRenderingReader.h"
 
 // Logic includes
@@ -61,8 +61,7 @@ qSlicerVolumeRenderingReader::qSlicerVolumeRenderingReader(vtkSlicerVolumeRender
 }
 
 //-----------------------------------------------------------------------------
-qSlicerVolumeRenderingReader::~qSlicerVolumeRenderingReader()
-= default;
+qSlicerVolumeRenderingReader::~qSlicerVolumeRenderingReader() = default;
 
 //-----------------------------------------------------------------------------
 void qSlicerVolumeRenderingReader::setVolumeRenderingLogic(vtkSlicerVolumeRenderingLogic* logic)

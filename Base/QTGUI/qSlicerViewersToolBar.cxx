@@ -21,7 +21,7 @@
 // Qt includes
 #include <QToolButton>
 
-// SlicerQt includes
+// Slicer includes
 #include "qSlicerApplication.h"
 #include "qSlicerLayoutManager.h"
 #include "qMRMLSliceWidget.h"
@@ -579,8 +579,7 @@ qSlicerViewersToolBar::qSlicerViewersToolBar(QWidget* parentWidget):Superclass(p
 }
 
 //---------------------------------------------------------------------------
-qSlicerViewersToolBar::~qSlicerViewersToolBar()
-= default;
+qSlicerViewersToolBar::~qSlicerViewersToolBar() = default;
 
 //---------------------------------------------------------------------------
 void qSlicerViewersToolBar::setApplicationLogic(vtkSlicerApplicationLogic* appLogic)

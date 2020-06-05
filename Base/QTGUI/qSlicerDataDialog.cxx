@@ -35,7 +35,7 @@
 #include "vtkArchive.h"
 #include "vtkMRMLApplicationLogic.h"
 
-/// SlicerQt includes
+/// Slicer includes
 #include "qSlicerApplication.h"
 #include "qSlicerDataDialog_p.h"
 #include "qSlicerIOManager.h"
@@ -114,8 +114,7 @@ qSlicerDataDialogPrivate::qSlicerDataDialogPrivate(QWidget* _parent)
 }
 
 //-----------------------------------------------------------------------------
-qSlicerDataDialogPrivate::~qSlicerDataDialogPrivate()
-= default;
+qSlicerDataDialogPrivate::~qSlicerDataDialogPrivate() = default;
 
 //-----------------------------------------------------------------------------
 void qSlicerDataDialogPrivate::addDirectory()
@@ -505,8 +504,7 @@ qSlicerDataDialog::qSlicerDataDialog(QObject* _parent)
 }
 
 //-----------------------------------------------------------------------------
-qSlicerDataDialog::~qSlicerDataDialog()
-= default;
+qSlicerDataDialog::~qSlicerDataDialog() = default;
 
 //-----------------------------------------------------------------------------
 qSlicerIO::IOFileType qSlicerDataDialog::fileType()const

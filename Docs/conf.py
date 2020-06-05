@@ -37,15 +37,13 @@ sys.path.append(os.path.abspath("./_sphinxext"))
 # ones.
 extensions = [
     'sphinx.ext.autodoc',
-    'workaround_recommonmark_issue_191'
+    'workaround_recommonmark_issue_191',
+    'recommonmark',
+    'sphinx_markdown_tables',
 ]
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
-
-source_parsers = {
-    '.md': CommonMarkParser,
-}
 
 # The suffix(es) of source filenames.
 # You can specify multiple suffix as a list of string:
@@ -80,6 +78,11 @@ language = None
 # directories to ignore when looking for source files.
 # This patterns also effect to html_static_path and html_extra_path
 exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
+
+# Set EXCLUDE_DEVELOPER_GUIDE=True environment variable to exclude developer guide.
+# It is useful for quicker documentation generation while eiditin user manual.
+if os.environ.get('EXCLUDE_DEVELOPER_GUIDE', None) == 'True':
+    exclude_patterns.append('developer_guide/*')
 
 # The name of the Pygments (syntax highlighting) style to use.
 pygments_style = 'sphinx'

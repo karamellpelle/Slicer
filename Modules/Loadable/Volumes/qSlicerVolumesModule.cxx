@@ -18,7 +18,7 @@
 
 ==============================================================================*/
 
-// SlicerQt includes
+// Slicer includes
 #include <qSlicerCoreApplication.h>
 #include <qSlicerIOManager.h>
 #include <qSlicerModuleManager.h>
@@ -59,8 +59,7 @@ qSlicerVolumesModule::qSlicerVolumesModule(QObject* _parent)
 }
 
 //-----------------------------------------------------------------------------
-qSlicerVolumesModule::~qSlicerVolumesModule()
-= default;
+qSlicerVolumesModule::~qSlicerVolumesModule() = default;
 
 //-----------------------------------------------------------------------------
 QString qSlicerVolumesModule::helpText()const

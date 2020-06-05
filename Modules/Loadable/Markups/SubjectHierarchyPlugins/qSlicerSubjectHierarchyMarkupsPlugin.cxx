@@ -56,7 +56,7 @@
 #include <QStandardItem>
 #include <QAction>
 
-// SlicerQt includes
+// Slicer includes
 #include "qSlicerAbstractModuleWidget.h"
 
 //-----------------------------------------------------------------------------
@@ -117,8 +117,7 @@ void qSlicerSubjectHierarchyMarkupsPluginPrivate::init()
 }
 
 //-----------------------------------------------------------------------------
-qSlicerSubjectHierarchyMarkupsPluginPrivate::~qSlicerSubjectHierarchyMarkupsPluginPrivate()
-= default;
+qSlicerSubjectHierarchyMarkupsPluginPrivate::~qSlicerSubjectHierarchyMarkupsPluginPrivate() = default;
 
 //-----------------------------------------------------------------------------
 // qSlicerSubjectHierarchyMarkupsPlugin methods
@@ -135,8 +134,7 @@ qSlicerSubjectHierarchyMarkupsPlugin::qSlicerSubjectHierarchyMarkupsPlugin(QObje
 }
 
 //-----------------------------------------------------------------------------
-qSlicerSubjectHierarchyMarkupsPlugin::~qSlicerSubjectHierarchyMarkupsPlugin()
-= default;
+qSlicerSubjectHierarchyMarkupsPlugin::~qSlicerSubjectHierarchyMarkupsPlugin() = default;
 
 //----------------------------------------------------------------------------
 double qSlicerSubjectHierarchyMarkupsPlugin::canAddNodeToSubjectHierarchy(

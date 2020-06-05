@@ -24,7 +24,7 @@
 // Markups includes
 #include <vtkSlicerMarkupsLogic.h>
 
-// SlicerQt includes
+// Slicer includes
 #include "qSlicerApplication.h"
 #include "qSlicerModuleManager.h"
 #include "qSlicerAbstractCoreModule.h"
@@ -80,8 +80,7 @@ qSlicerSimpleMarkupsWidgetPrivate::qSlicerSimpleMarkupsWidgetPrivate( qSlicerSim
 }
 
 //-----------------------------------------------------------------------------
-qSlicerSimpleMarkupsWidgetPrivate::~qSlicerSimpleMarkupsWidgetPrivate()
-= default;
+qSlicerSimpleMarkupsWidgetPrivate::~qSlicerSimpleMarkupsWidgetPrivate() = default;
 
 // --------------------------------------------------------------------------
 void qSlicerSimpleMarkupsWidgetPrivate::setupUi(qSlicerSimpleMarkupsWidget* widget)

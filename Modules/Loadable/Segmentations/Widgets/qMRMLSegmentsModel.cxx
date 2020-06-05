@@ -29,7 +29,7 @@
 // qMRML includes
 #include "qMRMLSegmentsModel_p.h"
 
-// SlicerQt includes
+// Slicer includes
 #include <qSlicerApplication.h>
 #include <qSlicerCoreApplication.h>
 #include <qSlicerModuleManager.h>
@@ -214,8 +214,7 @@ qMRMLSegmentsModel::qMRMLSegmentsModel(qMRMLSegmentsModelPrivate* pimpl, QObject
 }
 
 //------------------------------------------------------------------------------
-qMRMLSegmentsModel::~qMRMLSegmentsModel()
-= default;
+qMRMLSegmentsModel::~qMRMLSegmentsModel() = default;
 
 //------------------------------------------------------------------------------
 void qMRMLSegmentsModel::setSegmentationNode(vtkMRMLSegmentationNode* segmentationNode)

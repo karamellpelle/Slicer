@@ -26,7 +26,7 @@
 #include "qSlicerAbstractModule.h"
 #include "qSlicerModuleManager.h"
 
-// SlicerQt includes
+// Slicer includes
 #include "qSlicerModulesMenu.h"
 
 class qSlicerModulesMenuPrivate
@@ -378,8 +378,7 @@ qSlicerModulesMenu::qSlicerModulesMenu(QWidget* parentWidget)
 }
 
 //---------------------------------------------------------------------------
-qSlicerModulesMenu::~qSlicerModulesMenu()
-= default;
+qSlicerModulesMenu::~qSlicerModulesMenu() = default;
 
 //---------------------------------------------------------------------------
 void qSlicerModulesMenu::setDuplicateActions(bool duplicate)

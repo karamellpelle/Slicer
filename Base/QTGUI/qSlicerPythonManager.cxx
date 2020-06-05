@@ -14,7 +14,7 @@
 #include <QDebug>
 #include <QVariant>
 
-// SlicerQt includes
+// Slicer includes
 #include "qSlicerApplication.h"
 #include "qSlicerPythonManager.h"
 
@@ -24,9 +24,7 @@ qSlicerPythonManager::qSlicerPythonManager(QObject* _parent) : Superclass(_paren
 }
 
 //-----------------------------------------------------------------------------
-qSlicerPythonManager::~qSlicerPythonManager()
-{
-}
+qSlicerPythonManager::~qSlicerPythonManager() = default;
 
 //-----------------------------------------------------------------------------
 void qSlicerPythonManager::preInitialization()

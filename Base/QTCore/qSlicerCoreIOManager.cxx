@@ -25,7 +25,7 @@
 // CTK includes
 #include <ctkUtils.h>
 
-// SlicerQt includes
+// Slicer includes
 #include "qSlicerCoreApplication.h"
 #include "qSlicerCoreIOManager.h"
 #include "qSlicerFileReader.h"
@@ -66,12 +66,10 @@ public:
 };
 
 //-----------------------------------------------------------------------------
-qSlicerCoreIOManagerPrivate::qSlicerCoreIOManagerPrivate()
-= default;
+qSlicerCoreIOManagerPrivate::qSlicerCoreIOManagerPrivate() = default;
 
 //-----------------------------------------------------------------------------
-qSlicerCoreIOManagerPrivate::~qSlicerCoreIOManagerPrivate()
-= default;
+qSlicerCoreIOManagerPrivate::~qSlicerCoreIOManagerPrivate() = default;
 
 //-----------------------------------------------------------------------------
 vtkMRMLScene* qSlicerCoreIOManagerPrivate::currentScene()const
@@ -193,8 +191,7 @@ qSlicerCoreIOManager::qSlicerCoreIOManager(QObject* _parent)
 }
 
 //-----------------------------------------------------------------------------
-qSlicerCoreIOManager::~qSlicerCoreIOManager()
-= default;
+qSlicerCoreIOManager::~qSlicerCoreIOManager() = default;
 
 //-----------------------------------------------------------------------------
 qSlicerIO::IOFileType qSlicerCoreIOManager::fileType(const QString& fileName)const

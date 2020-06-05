@@ -16,7 +16,7 @@
 // PythonQt includes
 #include <PythonQt.h>
 
-// SlicerQt includes
+// Slicer includes
 #include "qSlicerApplicationHelper.h"
 
 #include "qSlicerBaseQTAppExport.h"
@@ -35,8 +35,7 @@ class qSlicerBaseQTAppPythonQtDecorators : public QObject
 
 public:
 
-  qSlicerBaseQTAppPythonQtDecorators()
-     = default;
+  qSlicerBaseQTAppPythonQtDecorators() = default;
 
 public slots:
 

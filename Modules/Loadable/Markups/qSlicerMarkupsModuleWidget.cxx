@@ -34,7 +34,7 @@
 // CTK includes
 #include "ctkMessageBox.h"
 
-// SlicerQt includes
+// Slicer includes
 #include "qMRMLSceneModel.h"
 #include "qMRMLSortFilterSubjectHierarchyProxyModel.h"
 #include "qMRMLSubjectHierarchyModel.h"
@@ -169,8 +169,7 @@ int qSlicerMarkupsModuleWidgetPrivate::columnIndex(QString label)
 }
 
 //-----------------------------------------------------------------------------
-qSlicerMarkupsModuleWidgetPrivate::~qSlicerMarkupsModuleWidgetPrivate()
-= default;
+qSlicerMarkupsModuleWidgetPrivate::~qSlicerMarkupsModuleWidgetPrivate() = default;
 
 //-----------------------------------------------------------------------------
 void qSlicerMarkupsModuleWidgetPrivate::setupUi(qSlicerWidget* widget)

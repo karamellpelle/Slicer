@@ -30,7 +30,7 @@
 // qMRML includes
 #include "qMRMLSubjectHierarchyModel_p.h"
 
-// SlicerQt includes
+// Slicer includes
 #include <qSlicerApplication.h>
 #include <qSlicerCoreApplication.h>
 #include <qSlicerModuleManager.h>
@@ -219,8 +219,7 @@ qMRMLSubjectHierarchyModel::qMRMLSubjectHierarchyModel(qMRMLSubjectHierarchyMode
 }
 
 //------------------------------------------------------------------------------
-qMRMLSubjectHierarchyModel::~qMRMLSubjectHierarchyModel()
-= default;
+qMRMLSubjectHierarchyModel::~qMRMLSubjectHierarchyModel() = default;
 
 //------------------------------------------------------------------------------
 void qMRMLSubjectHierarchyModel::setMRMLScene(vtkMRMLScene* scene)
@@ -1303,7 +1302,8 @@ void qMRMLSubjectHierarchyModel::updateSubjectHierarchyItemFromItemData(vtkIdTyp
     // No action if the chosen transform is the same as the applied one
     vtkMRMLTransformableNode* dataNode = vtkMRMLTransformableNode::SafeDownCast(
       d->SubjectHierarchyNode->GetItemDataNode(shItemID) );
-    if (dataNode && dataNode->GetParentTransformNode() == newParentTransformNode)
+    vtkMRMLTransformNode* currentTransformNode = (dataNode ? dataNode->GetParentTransformNode() : nullptr);
+    if (currentTransformNode == newParentTransformNode)
       {
       return;
       }

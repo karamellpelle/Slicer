@@ -18,7 +18,7 @@
 
 ==============================================================================*/
 
-// QT includes
+// Qt includes
 #include <QDebug>
 #include <QDialog>
 #include <QKeyEvent>
@@ -95,8 +95,7 @@ qMRMLColorPickerWidget::qMRMLColorPickerWidget(QWidget *_parent)
 }
 
 //------------------------------------------------------------------------------
-qMRMLColorPickerWidget::~qMRMLColorPickerWidget()
-= default;
+qMRMLColorPickerWidget::~qMRMLColorPickerWidget() = default;
 
 //------------------------------------------------------------------------------
 void qMRMLColorPickerWidget::setMRMLColorLogic(vtkMRMLColorLogic* colorLogic)

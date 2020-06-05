@@ -18,7 +18,7 @@
 
 ==============================================================================*/
 
-// QT includes
+// Qt includes
 
 // qMRML includes
 #include "qMRMLModelInfoWidget.h"
@@ -87,8 +87,7 @@ qMRMLModelInfoWidget::qMRMLModelInfoWidget(QWidget *_parent)
 }
 
 //------------------------------------------------------------------------------
-qMRMLModelInfoWidget::~qMRMLModelInfoWidget()
-= default;
+qMRMLModelInfoWidget::~qMRMLModelInfoWidget() = default;
 
 
 //------------------------------------------------------------------------------

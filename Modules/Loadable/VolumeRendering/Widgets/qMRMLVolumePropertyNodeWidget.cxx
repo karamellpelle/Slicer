@@ -18,7 +18,7 @@
 
 ==============================================================================*/
 
-// QT includes
+// Qt includes
 
 // qMRML includes
 #include "qMRMLVolumePropertyNodeWidget.h"
@@ -58,8 +58,7 @@ qMRMLVolumePropertyNodeWidgetPrivate::qMRMLVolumePropertyNodeWidgetPrivate(
 }
 
 // --------------------------------------------------------------------------
-qMRMLVolumePropertyNodeWidgetPrivate::~qMRMLVolumePropertyNodeWidgetPrivate()
-= default;
+qMRMLVolumePropertyNodeWidgetPrivate::~qMRMLVolumePropertyNodeWidgetPrivate() = default;
 
 // --------------------------------------------------------------------------
 void qMRMLVolumePropertyNodeWidgetPrivate::setupUi()
@@ -84,8 +83,7 @@ qMRMLVolumePropertyNodeWidget::qMRMLVolumePropertyNodeWidget(QWidget* parentWidg
 }
 
 // --------------------------------------------------------------------------
-qMRMLVolumePropertyNodeWidget::~qMRMLVolumePropertyNodeWidget()
-= default;
+qMRMLVolumePropertyNodeWidget::~qMRMLVolumePropertyNodeWidget() = default;
 
 // --------------------------------------------------------------------------
 vtkVolumeProperty* qMRMLVolumePropertyNodeWidget::volumeProperty()const

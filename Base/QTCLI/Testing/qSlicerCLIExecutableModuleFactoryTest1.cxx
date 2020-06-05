@@ -18,9 +18,9 @@
 
 ==============================================================================*/
 
-// QT includes
+// Qt includes
 
-// SlicerQt includes
+// Slicer includes
 #include <qSlicerCLIExecutableModuleFactory.h>
 
 // STD includes

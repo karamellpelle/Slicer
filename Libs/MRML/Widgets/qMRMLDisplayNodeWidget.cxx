@@ -18,7 +18,7 @@
 
 ==============================================================================*/
 
-// QT includes
+// Qt includes
 
 // qMRML includes
 #include "qMRMLDisplayNodeWidget.h"
@@ -93,8 +93,7 @@ qMRMLDisplayNodeWidget::qMRMLDisplayNodeWidget(QWidget *_parent)
 }
 
 //------------------------------------------------------------------------------
-qMRMLDisplayNodeWidget::~qMRMLDisplayNodeWidget()
-= default;
+qMRMLDisplayNodeWidget::~qMRMLDisplayNodeWidget() = default;
 
 
 //------------------------------------------------------------------------------

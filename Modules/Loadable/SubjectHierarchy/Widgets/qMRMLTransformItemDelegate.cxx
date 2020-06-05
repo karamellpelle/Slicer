@@ -20,7 +20,7 @@
 
 ==============================================================================*/
 
-// QT includes
+// Qt includes
 #include <QAction>
 #include <QActionGroup>
 #include <QApplication>
@@ -72,8 +72,7 @@ qMRMLTransformItemDelegate::qMRMLTransformItemDelegate(QObject *parent)
 }
 
 //------------------------------------------------------------------------------
-qMRMLTransformItemDelegate::~qMRMLTransformItemDelegate()
-= default;
+qMRMLTransformItemDelegate::~qMRMLTransformItemDelegate() = default;
 
 //------------------------------------------------------------------------------
 void qMRMLTransformItemDelegate::setMRMLScene(vtkMRMLScene* scene)

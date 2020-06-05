@@ -28,7 +28,7 @@
 // C++ includes
 #include <cmath>
 
-// SlicerQt includes
+// Slicer includes
 #include "qSlicerTablesModuleWidget.h"
 #include "ui_qSlicerTablesModuleWidget.h"
 
@@ -102,8 +102,7 @@ qSlicerTablesModuleWidget::qSlicerTablesModuleWidget(QWidget* _parentWidget)
 }
 
 //-----------------------------------------------------------------------------
-qSlicerTablesModuleWidget::~qSlicerTablesModuleWidget()
-= default;
+qSlicerTablesModuleWidget::~qSlicerTablesModuleWidget() = default;
 
 //-----------------------------------------------------------------------------
 void qSlicerTablesModuleWidget::setup()

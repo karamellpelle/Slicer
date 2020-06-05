@@ -74,9 +74,7 @@ qMRMLSequenceBrowserSeekWidget::qMRMLSequenceBrowserSeekWidget(QWidget *newParen
 }
 
 //-----------------------------------------------------------------------------
-qMRMLSequenceBrowserSeekWidget::~qMRMLSequenceBrowserSeekWidget()
-{
-}
+qMRMLSequenceBrowserSeekWidget::~qMRMLSequenceBrowserSeekWidget() = default;
 
 //-----------------------------------------------------------------------------
 void qMRMLSequenceBrowserSeekWidget::setMRMLSequenceBrowserNode(vtkMRMLNode* browserNode)

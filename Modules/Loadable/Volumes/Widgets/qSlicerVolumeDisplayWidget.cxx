@@ -1,6 +1,6 @@
-// QT includes
+// Qt includes
 
-// SlicerQT includes
+// Slicer includes
 #include "qSlicerDiffusionTensorVolumeDisplayWidget.h"
 #include "qSlicerDiffusionWeightedVolumeDisplayWidget.h"
 #include "qSlicerLabelMapVolumeDisplayWidget.h"
@@ -114,8 +114,7 @@ qSlicerVolumeDisplayWidget::qSlicerVolumeDisplayWidget(QWidget* parentWidget)
 }
 
 // --------------------------------------------------------------------------
-qSlicerVolumeDisplayWidget::~qSlicerVolumeDisplayWidget()
-= default;
+qSlicerVolumeDisplayWidget::~qSlicerVolumeDisplayWidget() = default;
 
 // --------------------------------------------------------------------------
 void qSlicerVolumeDisplayWidget::setMRMLVolumeNode(vtkMRMLNode* volumeNode)

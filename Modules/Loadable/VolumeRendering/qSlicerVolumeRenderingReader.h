@@ -21,7 +21,7 @@
 #ifndef __qSlicerVolumeRenderingReader_h
 #define __qSlicerVolumeRenderingReader_h
 
-// SlicerQT includes
+// Slicer includes
 #include <qSlicerFileReader.h>
 
 // Volume Rendering includes

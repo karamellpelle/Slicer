@@ -26,7 +26,7 @@
 // C++ includes
 #include <cmath>
 
-// SlicerQt includes
+// Slicer includes
 #include "qSlicerApplication.h"
 #include "qSlicerAbstractModuleWidget.h"
 #include "qSlicerLayoutManager.h"
@@ -102,8 +102,7 @@ qSlicerPlotsModuleWidget::qSlicerPlotsModuleWidget(QWidget* _parentWidget)
 }
 
 //-----------------------------------------------------------------------------
-qSlicerPlotsModuleWidget::~qSlicerPlotsModuleWidget()
-= default;
+qSlicerPlotsModuleWidget::~qSlicerPlotsModuleWidget() = default;
 
 //-----------------------------------------------------------------------------
 void qSlicerPlotsModuleWidget::setup()

@@ -22,7 +22,7 @@
 #include <QDebug>
 
 
-// SlicerQt includes
+// Slicer includes
 #include "qMRMLUnitWidget.h"
 #include "ui_qMRMLUnitWidget.h"
 
@@ -240,8 +240,7 @@ qMRMLUnitWidget::qMRMLUnitWidget(QWidget* _parent)
 }
 
 //-----------------------------------------------------------------------------
-qMRMLUnitWidget::~qMRMLUnitWidget()
-= default;
+qMRMLUnitWidget::~qMRMLUnitWidget() = default;
 
 //-----------------------------------------------------------------------------
 qMRMLUnitWidget::UnitProperties qMRMLUnitWidget::displayedProperties() const

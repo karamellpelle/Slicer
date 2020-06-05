@@ -58,16 +58,10 @@
 vtkStandardNewMacro(vtkSlicerSequencesLogic);
 
 //----------------------------------------------------------------------------
-vtkSlicerSequencesLogic::vtkSlicerSequencesLogic()
-  : UpdateProxyNodesFromSequencesInProgress(false)
-  , UpdateSequencesFromProxyNodesInProgress(false)
-{
-}
+vtkSlicerSequencesLogic::vtkSlicerSequencesLogic() = default;
 
 //----------------------------------------------------------------------------
-vtkSlicerSequencesLogic::~vtkSlicerSequencesLogic()
-{
-}
+vtkSlicerSequencesLogic::~vtkSlicerSequencesLogic() = default;
 
 //----------------------------------------------------------------------------
 void vtkSlicerSequencesLogic::PrintSelf(ostream& os, vtkIndent indent)

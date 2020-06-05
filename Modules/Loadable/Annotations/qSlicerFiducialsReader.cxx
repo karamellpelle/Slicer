@@ -20,7 +20,7 @@
 
 // Qt includes
 
-// SlicerQt includes
+// Slicer includes
 #include "qSlicerFiducialsReader.h"
 
 // Logic includes
@@ -61,8 +61,7 @@ qSlicerFiducialsReader::qSlicerFiducialsReader(vtkSlicerAnnotationModuleLogic* l
 }
 
 //-----------------------------------------------------------------------------
-qSlicerFiducialsReader::~qSlicerFiducialsReader()
-= default;
+qSlicerFiducialsReader::~qSlicerFiducialsReader() = default;
 
 //-----------------------------------------------------------------------------
 void qSlicerFiducialsReader::setAnnotationLogic(vtkSlicerAnnotationModuleLogic* logic)

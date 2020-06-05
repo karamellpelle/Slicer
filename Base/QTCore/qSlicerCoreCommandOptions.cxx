@@ -25,7 +25,7 @@
 // CTK includes
 #include <ctkPimpl.h>
 
-// SlicerQt includes
+// Slicer includes
 #include "qSlicerCoreCommandOptions.h"
 
 //-----------------------------------------------------------------------------
@@ -74,8 +74,7 @@ qSlicerCoreCommandOptions::qSlicerCoreCommandOptions():Superclass()
 }
 
 //-----------------------------------------------------------------------------
-qSlicerCoreCommandOptions::~qSlicerCoreCommandOptions()
-= default;
+qSlicerCoreCommandOptions::~qSlicerCoreCommandOptions() = default;
 
 //-----------------------------------------------------------------------------
 bool qSlicerCoreCommandOptions::parse(const QStringList& arguments)

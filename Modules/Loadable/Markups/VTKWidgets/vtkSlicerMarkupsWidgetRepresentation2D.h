@@ -159,7 +159,8 @@ protected:
   ControlPointsPipeline2D* GetControlPointsPipeline(int controlPointType);
 
   vtkSmartPointer<vtkIntArray> PointsVisibilityOnSlice;
-  bool                         CenterVisibilityOnSlice;
+  bool                         CenterVisibilityOnSlice = { false };
+  bool                         AnyPointVisibilityOnSlice = { false };  // at least one point is visible
 
   vtkSmartPointer<vtkTransform> WorldToSliceTransform;
   vtkSmartPointer<vtkPlane> SlicePlane;
@@ -172,7 +173,7 @@ protected:
   {
   public:
     MarkupsInteractionPipeline2D(vtkSlicerMarkupsWidgetRepresentation* representation);
-    ~MarkupsInteractionPipeline2D() override {};
+    ~MarkupsInteractionPipeline2D() override = default;;
 
     void GetViewPlaneNormal(double viewPlaneNormal[3]) override;
 

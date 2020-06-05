@@ -52,7 +52,7 @@
 #include <QStandardItem>
 #include <QAction>
 
-// SlicerQt includes
+// Slicer includes
 #include "qSlicerApplication.h"
 #include "qSlicerAbstractModuleWidget.h"
 #include "qSlicerLayoutManager.h"
@@ -88,8 +88,7 @@ void qSlicerSubjectHierarchyTablesPluginPrivate::init()
 }
 
 //-----------------------------------------------------------------------------
-qSlicerSubjectHierarchyTablesPluginPrivate::~qSlicerSubjectHierarchyTablesPluginPrivate()
-= default;
+qSlicerSubjectHierarchyTablesPluginPrivate::~qSlicerSubjectHierarchyTablesPluginPrivate() = default;
 
 //-----------------------------------------------------------------------------
 // qSlicerSubjectHierarchyTablesPlugin methods
@@ -106,8 +105,7 @@ qSlicerSubjectHierarchyTablesPlugin::qSlicerSubjectHierarchyTablesPlugin(QObject
 }
 
 //-----------------------------------------------------------------------------
-qSlicerSubjectHierarchyTablesPlugin::~qSlicerSubjectHierarchyTablesPlugin()
-= default;
+qSlicerSubjectHierarchyTablesPlugin::~qSlicerSubjectHierarchyTablesPlugin() = default;
 
 //----------------------------------------------------------------------------
 double qSlicerSubjectHierarchyTablesPlugin::canAddNodeToSubjectHierarchy(

@@ -21,7 +21,7 @@
 #include <QListWidgetItem>
 #include <QtPlugin>
 
-// SlicerQt includes
+// Slicer includes
 #include "qMRMLSequenceBrowserToolBar.h"
 #include "qSlicerApplication.h"
 #include "qSlicerLayoutManager.h"
@@ -425,9 +425,7 @@ qSlicerSequencesModuleWidget::qSlicerSequencesModuleWidget(QWidget* _parent)
 }
 
 //-----------------------------------------------------------------------------
-qSlicerSequencesModuleWidget::~qSlicerSequencesModuleWidget()
-{
-}
+qSlicerSequencesModuleWidget::~qSlicerSequencesModuleWidget() = default;
 
 //-----------------------------------------------------------------------------
 void qSlicerSequencesModuleWidget::setup ()

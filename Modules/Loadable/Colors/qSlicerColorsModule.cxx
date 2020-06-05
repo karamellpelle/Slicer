@@ -24,7 +24,7 @@
 // CTK includes
 #include <ctkColorDialog.h>
 
-// SlicerQt includes
+// Slicer includes
 #include "qSlicerApplication.h"
 #include "qSlicerCoreIOManager.h"
 #include "qSlicerNodeWriter.h"
@@ -64,8 +64,7 @@ qSlicerColorsModule::qSlicerColorsModule(QObject* _parent)
 }
 
 //-----------------------------------------------------------------------------
-qSlicerColorsModule::~qSlicerColorsModule()
-= default;
+qSlicerColorsModule::~qSlicerColorsModule() = default;
 
 //-----------------------------------------------------------------------------
 QStringList qSlicerColorsModule::categories()const

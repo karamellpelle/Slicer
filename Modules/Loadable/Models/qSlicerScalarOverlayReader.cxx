@@ -21,7 +21,7 @@
 // Qt includes
 #include <QDebug>
 
-// SlicerQt includes
+// Slicer includes
 #include "qSlicerScalarOverlayIOOptionsWidget.h"
 #include "qSlicerScalarOverlayReader.h"
 
@@ -53,8 +53,7 @@ qSlicerScalarOverlayReader::qSlicerScalarOverlayReader(
 }
 
 //-----------------------------------------------------------------------------
-qSlicerScalarOverlayReader::~qSlicerScalarOverlayReader()
-= default;
+qSlicerScalarOverlayReader::~qSlicerScalarOverlayReader() = default;
 
 //-----------------------------------------------------------------------------
 void qSlicerScalarOverlayReader::setModelsLogic(vtkSlicerModelsLogic* newModelsLogic)

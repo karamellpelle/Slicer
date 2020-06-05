@@ -18,7 +18,7 @@
 
 ==============================================================================*/
 
-// SlicerQt includes
+// Slicer includes
 #include "qSlicerApplication.h"
 #include "qSlicerIOManager.h"
 #include "qSlicerModuleManager.h"
@@ -61,8 +61,7 @@ qSlicerDataModule::qSlicerDataModule(QObject* parentObject)
 }
 
 //-----------------------------------------------------------------------------
-qSlicerDataModule::~qSlicerDataModule()
-= default;
+qSlicerDataModule::~qSlicerDataModule() = default;
 
 //-----------------------------------------------------------------------------
 QIcon qSlicerDataModule::icon()const

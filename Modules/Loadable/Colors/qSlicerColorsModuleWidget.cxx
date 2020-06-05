@@ -25,7 +25,7 @@
 // CTK includes
 #include <ctkVTKScalarsToColorsView.h>
 
-// SlicerQt includes
+// Slicer includes
 #include "qSlicerApplication.h"
 #include "qSlicerLayoutManager.h"
 #include "qSlicerColorsModuleWidget.h"
@@ -150,8 +150,7 @@ qSlicerColorsModuleWidget::qSlicerColorsModuleWidget(QWidget* _parent)
 }
 
 //-----------------------------------------------------------------------------
-qSlicerColorsModuleWidget::~qSlicerColorsModuleWidget()
-= default;
+qSlicerColorsModuleWidget::~qSlicerColorsModuleWidget() = default;
 
 //-----------------------------------------------------------------------------
 void qSlicerColorsModuleWidget::setup()

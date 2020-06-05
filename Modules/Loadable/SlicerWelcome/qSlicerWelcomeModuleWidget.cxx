@@ -31,7 +31,7 @@
 #include "vtkSlicerConfigure.h" // For Slicer_BUILD_DICOM_SUPPORT
 #include "vtkSlicerVersionConfigure.h"
 
-// SlicerQt includes
+// Slicer includes
 #include "qSlicerWelcomeModuleWidget.h"
 #include "ui_qSlicerWelcomeModuleWidget.h"
 #include "qSlicerApplication.h"
@@ -190,8 +190,7 @@ qSlicerWelcomeModuleWidget::qSlicerWelcomeModuleWidget(QWidget* _parent)
 }
 
 //-----------------------------------------------------------------------------
-qSlicerWelcomeModuleWidget::~qSlicerWelcomeModuleWidget()
-= default;
+qSlicerWelcomeModuleWidget::~qSlicerWelcomeModuleWidget() = default;
 
 //-----------------------------------------------------------------------------
 void qSlicerWelcomeModuleWidget::setup()

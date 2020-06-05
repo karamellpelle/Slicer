@@ -45,7 +45,7 @@
 #include <QAction>
 #include <QMenu>
 
-// SlicerQt includes
+// Slicer includes
 #include "qSlicerApplication.h"
 #include "qSlicerLayoutManager.h"
 #include "qMRMLSliceWidget.h"
@@ -104,8 +104,7 @@ void qSlicerSubjectHierarchySegmentsPluginPrivate::init()
 }
 
 //-----------------------------------------------------------------------------
-qSlicerSubjectHierarchySegmentsPluginPrivate::~qSlicerSubjectHierarchySegmentsPluginPrivate()
-= default;
+qSlicerSubjectHierarchySegmentsPluginPrivate::~qSlicerSubjectHierarchySegmentsPluginPrivate() = default;
 
 //-----------------------------------------------------------------------------
 // qSlicerSubjectHierarchySegmentsPlugin methods
@@ -122,8 +121,7 @@ qSlicerSubjectHierarchySegmentsPlugin::qSlicerSubjectHierarchySegmentsPlugin(QOb
 }
 
 //-----------------------------------------------------------------------------
-qSlicerSubjectHierarchySegmentsPlugin::~qSlicerSubjectHierarchySegmentsPlugin()
-= default;
+qSlicerSubjectHierarchySegmentsPlugin::~qSlicerSubjectHierarchySegmentsPlugin() = default;
 
 //----------------------------------------------------------------------------
 double qSlicerSubjectHierarchySegmentsPlugin::canReparentItemInsideSubjectHierarchy(vtkIdType itemID, vtkIdType parentItemID)const

@@ -22,7 +22,7 @@
 #include <QDebug>
 #include <QList>
 
-// SlicerQt includes
+// Slicer includes
 #include "qSlicerAbstractCoreModule.h"
 #include "qSlicerAbstractModuleRepresentation.h"
 
@@ -90,8 +90,7 @@ qSlicerAbstractCoreModule::qSlicerAbstractCoreModule(QObject* _parent)
 }
 
 //-----------------------------------------------------------------------------
-qSlicerAbstractCoreModule::~qSlicerAbstractCoreModule()
-= default;
+qSlicerAbstractCoreModule::~qSlicerAbstractCoreModule() = default;
 
 //-----------------------------------------------------------------------------
 void qSlicerAbstractCoreModule::initialize(vtkSlicerApplicationLogic* _appLogic)

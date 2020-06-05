@@ -126,9 +126,7 @@ qMRMLSequenceBrowserToolBar::qMRMLSequenceBrowserToolBar(QWidget* _parent)
 }
 
 //---------------------------------------------------------------------------
-qMRMLSequenceBrowserToolBar::~qMRMLSequenceBrowserToolBar()
-{
-}
+qMRMLSequenceBrowserToolBar::~qMRMLSequenceBrowserToolBar() = default;
 
 // --------------------------------------------------------------------------
 void qMRMLSequenceBrowserToolBar::setMRMLScene(vtkMRMLScene* scene)

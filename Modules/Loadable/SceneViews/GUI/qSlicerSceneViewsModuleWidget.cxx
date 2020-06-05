@@ -5,7 +5,7 @@
 #include "ctkMessageBox.h"
 #include "ctkFittedTextBrowser.h"
 
-// QT includes
+// Qt includes
 #include <QDebug>
 #include <QLabel>
 #include <QMainWindow>
@@ -209,8 +209,7 @@ qSlicerSceneViewsModuleWidget::qSlicerSceneViewsModuleWidget(QWidget* parent) :
 }
 
 //-----------------------------------------------------------------------------
-qSlicerSceneViewsModuleWidget::~qSlicerSceneViewsModuleWidget()
-= default;
+qSlicerSceneViewsModuleWidget::~qSlicerSceneViewsModuleWidget() = default;
 
 //-----------------------------------------------------------------------------
 void qSlicerSceneViewsModuleWidget::setup()

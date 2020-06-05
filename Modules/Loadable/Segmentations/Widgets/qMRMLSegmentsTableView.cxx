@@ -42,7 +42,7 @@
 #include <vtkMRMLModelNode.h>
 #include <vtkMRMLSliceNode.h>
 
-// SlicerQt includes
+// Slicer includes
 #include <qSlicerApplication.h>
 #include <qSlicerCoreApplication.h>
 #include <qSlicerLayoutManager.h>
@@ -319,8 +319,7 @@ qMRMLSegmentsTableView::qMRMLSegmentsTableView(QWidget* _parent)
 }
 
 //-----------------------------------------------------------------------------
-qMRMLSegmentsTableView::~qMRMLSegmentsTableView()
-= default;
+qMRMLSegmentsTableView::~qMRMLSegmentsTableView() = default;
 
 //-----------------------------------------------------------------------------
 void qMRMLSegmentsTableView::setSegmentationNode(vtkMRMLNode* node)

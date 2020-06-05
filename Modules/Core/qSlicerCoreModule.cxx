@@ -20,7 +20,7 @@
 
 // Qt includes
 
-// SlicerQt includes
+// Slicer includes
 #include "qSlicerCoreModule.h"
 
 //-----------------------------------------------------------------------------
@@ -37,8 +37,7 @@ qSlicerCoreModule::qSlicerCoreModule(QObject* _parent)
 }
 
 //-----------------------------------------------------------------------------
-qSlicerCoreModule::~qSlicerCoreModule()
-= default;
+qSlicerCoreModule::~qSlicerCoreModule() = default;
 
 //-----------------------------------------------------------------------------
 void qSlicerCoreModule::setup()

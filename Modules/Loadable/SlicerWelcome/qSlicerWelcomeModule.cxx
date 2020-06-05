@@ -18,7 +18,7 @@
 
 ==============================================================================*/
 
-// SlicerQt includes
+// Slicer includes
 #include "qSlicerWelcomeModule.h"
 #include "qSlicerWelcomeModuleWidget.h"
 
@@ -37,8 +37,7 @@ qSlicerWelcomeModule::qSlicerWelcomeModule(QObject* _parent)
 }
 
 //-----------------------------------------------------------------------------
-qSlicerWelcomeModule::~qSlicerWelcomeModule()
-= default;
+qSlicerWelcomeModule::~qSlicerWelcomeModule() = default;
 
 //-----------------------------------------------------------------------------
 QStringList qSlicerWelcomeModule::categories()const

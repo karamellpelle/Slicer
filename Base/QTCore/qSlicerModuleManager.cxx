@@ -20,7 +20,7 @@
 
 // Qt includes
 
-// SlicerQt includes
+// Slicer includes
 #include "qSlicerModuleManager.h"
 #include "qSlicerCoreApplication.h"
 #include "qSlicerAbstractCoreModule.h"
@@ -48,8 +48,7 @@ qSlicerModuleManager::qSlicerModuleManager(QObject* newParent)
 }
 
 //-----------------------------------------------------------------------------
-qSlicerModuleManager::~qSlicerModuleManager()
-= default;
+qSlicerModuleManager::~qSlicerModuleManager() = default;
 
 //-----------------------------------------------------------------------------
 void qSlicerModuleManager::printAdditionalInfo()

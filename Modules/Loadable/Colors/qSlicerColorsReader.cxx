@@ -20,7 +20,7 @@
 
 // Qt includes
 
-// SlicerQt includes
+// Slicer includes
 #include "qSlicerColorsReader.h"
 
 // Logic includes
@@ -49,8 +49,7 @@ qSlicerColorsReader::qSlicerColorsReader(
 }
 
 //-----------------------------------------------------------------------------
-qSlicerColorsReader::~qSlicerColorsReader()
-= default;
+qSlicerColorsReader::~qSlicerColorsReader() = default;
 
 //-----------------------------------------------------------------------------
 void qSlicerColorsReader::setColorLogic(vtkSlicerColorLogic* newColorLogic)

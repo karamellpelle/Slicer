@@ -6,14 +6,15 @@
 Welcome to 3D Slicer's documentation!
 =====================================
 
+This is documentation is a work in progress, in preparation for the new Slicer-5.0 release.
+
+For Slicer-4.10 documentation, refer to the `3D Slicer wiki <https://www.slicer.org/wiki/Documentation/4.10>`_.
+
 .. toctree::
    :maxdepth: 2
 
+   user_guide/about
    user_guide/getting_started
-   user_guide/license
-   user_guide/citing
-   user_guide/acknowledgments
-   user_guide/commercial_use
 
 .. toctree::
    :maxdepth: 3
@@ -21,27 +22,19 @@ Welcome to 3D Slicer's documentation!
 
    user_guide/user_interface
    user_guide/data_loading_and_saving
-   user_guide/modules
-   user_guide/extensions_manager
+   user_guide/image_segmentation
+   user_guide/modules/index.rst
+   user_guide/extension_manager
    user_guide/settings
 
-
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 3
    :caption: Developer Guide:
 
    developer_guide/api
+   developer_guide/mrml_overview
    developer_guide/contributing
    developer_guide/authors
-
-
-.. toctree::
-   :hidden:
-
-   user_guide/module_dicompatcher
-   user_guide/module_segmenteditor
-   user_guide/module_segmentstatistics
-
 
 Indices and tables
 ==================

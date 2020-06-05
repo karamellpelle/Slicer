@@ -18,7 +18,7 @@
 
 ==============================================================================*/
 
-// QT includes
+// Qt includes
 #include <QSortFilterProxyModel>
 
 // qMRML includes
@@ -76,8 +76,7 @@ qMRMLColorListView::qMRMLColorListView(QWidget *_parent)
 }
 
 //------------------------------------------------------------------------------
-qMRMLColorListView::~qMRMLColorListView()
-= default;
+qMRMLColorListView::~qMRMLColorListView() = default;
 
 //------------------------------------------------------------------------------
 qMRMLColorModel* qMRMLColorListView::colorModel()const

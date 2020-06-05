@@ -30,7 +30,7 @@
 #include <QAction>
 #include <QColor>
 
-// SlicerQt includes
+// Slicer includes
 #include "qSlicerApplication.h"
 #include "qSlicerAbstractModule.h"
 #include "qSlicerModuleManager.h"
@@ -51,8 +51,7 @@ qSlicerSubjectHierarchyAbstractPlugin::qSlicerSubjectHierarchyAbstractPlugin(QOb
 }
 
 //-----------------------------------------------------------------------------
-qSlicerSubjectHierarchyAbstractPlugin::~qSlicerSubjectHierarchyAbstractPlugin()
-= default;
+qSlicerSubjectHierarchyAbstractPlugin::~qSlicerSubjectHierarchyAbstractPlugin() = default;
 
 //-----------------------------------------------------------------------------
 QString qSlicerSubjectHierarchyAbstractPlugin::name()const

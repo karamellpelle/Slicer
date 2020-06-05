@@ -24,7 +24,7 @@
 // Markups includes
 //#include <vtkSlicerTablesLogic.h>
 
-// SlicerQt includes
+// Slicer includes
 #include "qSlicerApplication.h"
 #include "qSlicerModuleManager.h"
 #include "qSlicerAbstractCoreModule.h"
@@ -76,8 +76,7 @@ qSlicerTableColumnPropertiesWidgetPrivate::qSlicerTableColumnPropertiesWidgetPri
 }
 
 //-----------------------------------------------------------------------------
-qSlicerTableColumnPropertiesWidgetPrivate::~qSlicerTableColumnPropertiesWidgetPrivate()
-= default;
+qSlicerTableColumnPropertiesWidgetPrivate::~qSlicerTableColumnPropertiesWidgetPrivate() = default;
 
 // --------------------------------------------------------------------------
 void qSlicerTableColumnPropertiesWidgetPrivate::setupUi(qSlicerTableColumnPropertiesWidget* widget)

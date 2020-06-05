@@ -18,7 +18,7 @@
 
 ==============================================================================*/
 
-// QT includes
+// Qt includes
 #include <QDebug>
 
 // CTK includes
@@ -152,8 +152,7 @@ qMRMLVolumeInfoWidget::qMRMLVolumeInfoWidget(QWidget *_parent)
 }
 
 //------------------------------------------------------------------------------
-qMRMLVolumeInfoWidget::~qMRMLVolumeInfoWidget()
-= default;
+qMRMLVolumeInfoWidget::~qMRMLVolumeInfoWidget() = default;
 
 
 //------------------------------------------------------------------------------

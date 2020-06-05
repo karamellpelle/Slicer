@@ -26,7 +26,7 @@
 #include <QLineEdit>
 #include <QDir>
 
-// SlicerQt includes
+// Slicer includes
 #include "qSlicerTablesReader.h"
 
 // Logic includes
@@ -66,8 +66,7 @@ qSlicerTablesReader
 }
 
 //-----------------------------------------------------------------------------
-qSlicerTablesReader::~qSlicerTablesReader()
-= default;
+qSlicerTablesReader::~qSlicerTablesReader() = default;
 
 //-----------------------------------------------------------------------------
 void qSlicerTablesReader::setLogic(vtkSlicerTablesLogic* logic)

@@ -21,7 +21,7 @@
 // Qt includes
 #include <QFileInfo>
 
-// SlicerQt includes
+// Slicer includes
 #include "qSlicerAnnotationsIOOptionsWidget.h"
 #include "qSlicerAnnotationsReader.h"
 
@@ -62,8 +62,7 @@ qSlicerAnnotationsReader::qSlicerAnnotationsReader(vtkSlicerAnnotationModuleLogi
 }
 
 //-----------------------------------------------------------------------------
-qSlicerAnnotationsReader::~qSlicerAnnotationsReader()
-= default;
+qSlicerAnnotationsReader::~qSlicerAnnotationsReader() = default;
 
 //-----------------------------------------------------------------------------
 void qSlicerAnnotationsReader::setAnnotationLogic(vtkSlicerAnnotationModuleLogic* logic)

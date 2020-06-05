@@ -20,7 +20,7 @@
 
 // Qt includes
 
-// SlicerQt includes
+// Slicer includes
 #include "qSlicerTransformsReader.h"
 
 // Logic includes
@@ -50,8 +50,7 @@ qSlicerTransformsReader::qSlicerTransformsReader(
 
 
 //-----------------------------------------------------------------------------
-qSlicerTransformsReader::~qSlicerTransformsReader()
-= default;
+qSlicerTransformsReader::~qSlicerTransformsReader() = default;
 
 //-----------------------------------------------------------------------------
 void qSlicerTransformsReader::setTransformLogic(vtkSlicerTransformLogic* newTransformLogic)

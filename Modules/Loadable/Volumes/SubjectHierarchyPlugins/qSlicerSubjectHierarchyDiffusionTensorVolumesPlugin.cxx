@@ -49,11 +49,11 @@
 #include <QStandardItem>
 #include <QAction>
 
-// SlicerQt includes
+// Slicer includes
 #include "qSlicerApplication.h"
 #include "qSlicerModuleManager.h"
 #include "qSlicerAbstractCoreModule.h"
- 
+
 //-----------------------------------------------------------------------------
 /// \ingroup Slicer_QtModules_SubjectHierarchy_Plugins
 class qSlicerSubjectHierarchyDiffusionTensorVolumesPluginPrivate: public QObject
@@ -97,8 +97,7 @@ void qSlicerSubjectHierarchyDiffusionTensorVolumesPluginPrivate::init()
 }
 
 //-----------------------------------------------------------------------------
-qSlicerSubjectHierarchyDiffusionTensorVolumesPluginPrivate::~qSlicerSubjectHierarchyDiffusionTensorVolumesPluginPrivate()
-= default;
+qSlicerSubjectHierarchyDiffusionTensorVolumesPluginPrivate::~qSlicerSubjectHierarchyDiffusionTensorVolumesPluginPrivate() = default;
 
 //-----------------------------------------------------------------------------
 // qSlicerSubjectHierarchyDiffusionTensorVolumesPlugin methods
@@ -115,8 +114,7 @@ qSlicerSubjectHierarchyDiffusionTensorVolumesPlugin::qSlicerSubjectHierarchyDiff
 }
 
 //-----------------------------------------------------------------------------
-qSlicerSubjectHierarchyDiffusionTensorVolumesPlugin::~qSlicerSubjectHierarchyDiffusionTensorVolumesPlugin()
-= default;
+qSlicerSubjectHierarchyDiffusionTensorVolumesPlugin::~qSlicerSubjectHierarchyDiffusionTensorVolumesPlugin() = default;
 
 //----------------------------------------------------------------------------
 double qSlicerSubjectHierarchyDiffusionTensorVolumesPlugin::canAddNodeToSubjectHierarchy(

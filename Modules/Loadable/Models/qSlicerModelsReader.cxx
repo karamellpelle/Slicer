@@ -21,7 +21,7 @@
 // Qt includes
 #include <QFileInfo>
 
-// SlicerQt includes
+// Slicer includes
 #include "qSlicerModelsIOOptionsWidget.h"
 #include "qSlicerModelsReader.h"
 
@@ -52,8 +52,7 @@ qSlicerModelsReader::qSlicerModelsReader(vtkSlicerModelsLogic* _modelsLogic, QOb
 }
 
 //-----------------------------------------------------------------------------
-qSlicerModelsReader::~qSlicerModelsReader()
-= default;
+qSlicerModelsReader::~qSlicerModelsReader() = default;
 
 //-----------------------------------------------------------------------------
 void qSlicerModelsReader::setModelsLogic(vtkSlicerModelsLogic* newModelsLogic)

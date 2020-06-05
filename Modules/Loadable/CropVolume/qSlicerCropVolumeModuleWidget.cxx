@@ -5,7 +5,7 @@
 // CTK includes
 #include <ctkFlowLayout.h>
 
-// SlicerQt includes
+// Slicer includes
 #include <qSlicerAbstractCoreModule.h>
 #include <qSlicerApplication.h>
 #include <qSlicerLayoutManager.h>
@@ -71,8 +71,7 @@ qSlicerCropVolumeModuleWidgetPrivate::qSlicerCropVolumeModuleWidgetPrivate(qSlic
 }
 
 //-----------------------------------------------------------------------------
-qSlicerCropVolumeModuleWidgetPrivate::~qSlicerCropVolumeModuleWidgetPrivate()
-= default;
+qSlicerCropVolumeModuleWidgetPrivate::~qSlicerCropVolumeModuleWidgetPrivate() = default;
 
 //-----------------------------------------------------------------------------
 vtkSlicerCropVolumeLogic* qSlicerCropVolumeModuleWidgetPrivate::logic() const
@@ -202,8 +201,7 @@ qSlicerCropVolumeModuleWidget::qSlicerCropVolumeModuleWidget(QWidget* _parent)
 }
 
 //-----------------------------------------------------------------------------
-qSlicerCropVolumeModuleWidget::~qSlicerCropVolumeModuleWidget()
-= default;
+qSlicerCropVolumeModuleWidget::~qSlicerCropVolumeModuleWidget() = default;
 
 //-----------------------------------------------------------------------------
 void qSlicerCropVolumeModuleWidget::setup()

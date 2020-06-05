@@ -22,7 +22,7 @@
 #include <QDebug>
 #include <QDir>
 
-/// SlicerQt includes
+/// Slicer includes
 #include "qSlicerCoreApplication.h"
 #include "qSlicerCoreIOManager.h"
 #include "qSlicerSlicer2SceneReader.h"
@@ -1245,8 +1245,7 @@ qSlicerSlicer2SceneReader::qSlicerSlicer2SceneReader(vtkSlicerApplicationLogic* 
 }
 
 //-----------------------------------------------------------------------------
-qSlicerSlicer2SceneReader::~qSlicerSlicer2SceneReader()
-= default;
+qSlicerSlicer2SceneReader::~qSlicerSlicer2SceneReader() = default;
 
 //-----------------------------------------------------------------------------
 vtkSlicerApplicationLogic* qSlicerSlicer2SceneReader::applicationLogic()const

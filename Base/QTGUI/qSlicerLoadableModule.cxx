@@ -32,7 +32,7 @@
 # include <ctkScopedCurrentDir.h>
 #endif
 
-// SlicerQt includes
+// Slicer includes
 #include "qSlicerLoadableModule.h"
 #ifdef Slicer_USE_PYTHONQT
 # include "qSlicerCoreApplication.h"
@@ -53,8 +53,7 @@ qSlicerLoadableModule::qSlicerLoadableModule(QObject* _parentObject)
 }
 
 //-----------------------------------------------------------------------------
-qSlicerLoadableModule::~qSlicerLoadableModule()
-= default;
+qSlicerLoadableModule::~qSlicerLoadableModule() = default;
 
 //-----------------------------------------------------------------------------
 bool qSlicerLoadableModule::importModulePythonExtensions(

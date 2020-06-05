@@ -21,7 +21,7 @@
 // Qt includes
 #include <QFileInfo>
 
-// SlicerQt includes
+// Slicer includes
 #include "qSlicerShaderPropertyReader.h"
 
 // Logic includes
@@ -61,8 +61,7 @@ qSlicerShaderPropertyReader::qSlicerShaderPropertyReader(vtkSlicerVolumeRenderin
 }
 
 //-----------------------------------------------------------------------------
-qSlicerShaderPropertyReader::~qSlicerShaderPropertyReader()
-= default;
+qSlicerShaderPropertyReader::~qSlicerShaderPropertyReader() = default;
 
 //-----------------------------------------------------------------------------
 void qSlicerShaderPropertyReader::setVolumeRenderingLogic(vtkSlicerVolumeRenderingLogic* logic)

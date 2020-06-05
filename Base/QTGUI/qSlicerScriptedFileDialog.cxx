@@ -25,7 +25,7 @@
 // PythonQt includes
 #include <PythonQt.h>
 
-// SlicerQt includes
+// Slicer includes
 #include "qSlicerScriptedFileDialog.h"
 #include "qSlicerScriptedUtils_p.h"
 
@@ -74,8 +74,7 @@ qSlicerScriptedFileDialogPrivate::qSlicerScriptedFileDialogPrivate()
 }
 
 //-----------------------------------------------------------------------------
-qSlicerScriptedFileDialogPrivate::~qSlicerScriptedFileDialogPrivate()
-= default;
+qSlicerScriptedFileDialogPrivate::~qSlicerScriptedFileDialogPrivate() = default;
 
 //-----------------------------------------------------------------------------
 // qSlicerScriptedFileDialog methods
@@ -88,9 +87,7 @@ qSlicerScriptedFileDialog::qSlicerScriptedFileDialog(QObject* parent)
 }
 
 //-----------------------------------------------------------------------------
-qSlicerScriptedFileDialog::~qSlicerScriptedFileDialog()
-{
-}
+qSlicerScriptedFileDialog::~qSlicerScriptedFileDialog() = default;
 
 //-----------------------------------------------------------------------------
 QString qSlicerScriptedFileDialog::pythonSource()const

@@ -18,12 +18,12 @@
 
 ==============================================================================*/
 
-// QT includes
+// Qt includes
 #include <QButtonGroup>
 #include <QMenu>
 #include <QString>
 
-// SlicerQt includes
+// Slicer includes
 #include "qMRMLSliceControllerWidget_p.h" // For updateSliceOrientationSelector
 #include "vtkMRMLSliceNode.h"
 #include "vtkSlicerReformatLogic.h"
@@ -312,8 +312,7 @@ qSlicerReformatModuleWidget::qSlicerReformatModuleWidget(
 }
 
 //------------------------------------------------------------------------------
-qSlicerReformatModuleWidget::~qSlicerReformatModuleWidget()
-= default;
+qSlicerReformatModuleWidget::~qSlicerReformatModuleWidget() = default;
 
 //------------------------------------------------------------------------------
 void qSlicerReformatModuleWidget::setup()

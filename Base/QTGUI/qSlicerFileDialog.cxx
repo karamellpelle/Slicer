@@ -25,7 +25,7 @@
 #include <ctkFileDialog.h>
 #include <ctkUtils.h>
 
-// SlicerQt includes
+// Slicer includes
 #include "qSlicerApplication.h"
 #include "qSlicerFileReader.h"
 #include "qSlicerIOManager.h"
@@ -55,8 +55,7 @@ qSlicerFileDialog::qSlicerFileDialog(QObject* _parent)
 }
 
 //-----------------------------------------------------------------------------
-qSlicerFileDialog::~qSlicerFileDialog()
-= default;
+qSlicerFileDialog::~qSlicerFileDialog() = default;
 
 //-----------------------------------------------------------------------------
 QStringList qSlicerFileDialog::nameFilters(qSlicerIO::IOFileType fileType)
@@ -124,8 +123,7 @@ qSlicerStandardFileDialog::qSlicerStandardFileDialog(QObject* _parent)
 }
 
 //-----------------------------------------------------------------------------
-qSlicerStandardFileDialog::~qSlicerStandardFileDialog()
-= default;
+qSlicerStandardFileDialog::~qSlicerStandardFileDialog() = default;
 
 //-----------------------------------------------------------------------------
 void qSlicerStandardFileDialog::setFileType(qSlicerIO::IOFileType _fileType)

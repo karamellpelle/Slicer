@@ -18,7 +18,7 @@
 
 ==============================================================================*/
 
-// SlicerQt includes
+// Slicer includes
 #include "qSlicerDataModuleWidget.h"
 #include "ui_qSlicerDataModuleWidget.h"
 #include "qSlicerApplication.h"
@@ -117,8 +117,7 @@ qSlicerDataModuleWidget::qSlicerDataModuleWidget(QWidget* parentWidget)
 }
 
 //-----------------------------------------------------------------------------
-qSlicerDataModuleWidget::~qSlicerDataModuleWidget()
-= default;
+qSlicerDataModuleWidget::~qSlicerDataModuleWidget() = default;
 
 //-----------------------------------------------------------------------------
 void qSlicerDataModuleWidget::enter()

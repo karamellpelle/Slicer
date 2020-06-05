@@ -33,7 +33,7 @@
 #include <ctkCheckableModelHelper.h>
 #include <ctkVTKWidgetsUtils.h>
 
-/// SlicerQt includes
+/// Slicer includes
 #include "qSlicerApplication.h"
 #include "qSlicerCoreIOManager.h"
 #include "qSlicerFileWriterOptionsWidget.h"
@@ -177,11 +177,12 @@ qSlicerSaveDataDialogPrivate::qSlicerSaveDataDialogPrivate(QWidget* parentWidget
     }
   this->ShowMoreCheckBox->setChecked(qSlicerApplication::application()->userSettings()->value(SHOW_OPTIONS_SETTINGS_KEY).toBool());
   this->showMoreColumns(this->ShowMoreCheckBox->isChecked());
+
+  this->PopulatingItems = false;
 }
 
 //-----------------------------------------------------------------------------
-qSlicerSaveDataDialogPrivate::~qSlicerSaveDataDialogPrivate()
-= default;
+qSlicerSaveDataDialogPrivate::~qSlicerSaveDataDialogPrivate() = default;
 
 //-----------------------------------------------------------------------------
 void qSlicerSaveDataDialogPrivate::setMRMLScene(vtkMRMLScene* scene)
@@ -233,6 +234,8 @@ void qSlicerSaveDataDialogPrivate::populateItems()
     {
     return;
     }
+
+  this->PopulatingItems = true;
 
   QDir newDir(this->MRMLScene->GetRootDirectory());
   if (!newDir.exists())
@@ -295,6 +298,8 @@ void qSlicerSaveDataDialogPrivate::populateItems()
 
   // Enable/disable nodes depending on the scene file format
   this->onSceneFormatChanged();
+
+  this->PopulatingItems = false;
 
   this->updateSize();
 }
@@ -365,7 +370,7 @@ void qSlicerSaveDataDialogPrivate::populateScene()
                    this, SLOT(onSceneFormatChanged()));
 
   // Scene FileName
-  QTableWidgetItem* fileNameItem = this->createFileNameItem(sceneFileInfo, ".mrml", /* nodeID = */ QString());
+  QTableWidgetItem* fileNameItem = this->createFileNameItem(sceneFileInfo, currentExtension, /* nodeID = */ QString());
   this->FileWidget->setItem( row, FileNameColumn, fileNameItem);
 
   // Scene Directory
@@ -899,11 +904,14 @@ bool qSlicerSaveDataDialogPrivate::saveNodes()
 QFileInfo qSlicerSaveDataDialogPrivate::file(int row)const
 {
   QTableWidgetItem* fileNameItem = this->FileWidget->item(row, FileNameColumn);
-  Q_ASSERT(fileNameItem);
-
   ctkDirectoryButton* fileDirectoryButton = qobject_cast<ctkDirectoryButton*>(
     this->FileWidget->cellWidget(row, FileDirectoryColumn));
-  Q_ASSERT(fileDirectoryButton);
+
+  if (!fileNameItem || !fileDirectoryButton)
+    {
+    qCritical() << Q_FUNC_INFO << " failed: filename or directory button not found";
+    return QFileInfo();
+    }
 
   QDir directory = fileDirectoryButton->directory();
   return QFileInfo(directory, fileNameItem->text());
@@ -1312,6 +1320,10 @@ void qSlicerSaveDataDialogPrivate::onItemChanged(QTableWidgetItem* widgetItem)
     {
     return;
     }
+  if (this->PopulatingItems)
+    {
+    return;
+    }
 
   /// If filename is changed then we need to validate if it matches any of the supported
   /// file extension. If it does then update the file format selector.
@@ -1409,8 +1421,7 @@ qSlicerSaveDataDialog::qSlicerSaveDataDialog(QObject* parentObject)
 }
 
 //-----------------------------------------------------------------------------
-qSlicerSaveDataDialog::~qSlicerSaveDataDialog()
-= default;
+qSlicerSaveDataDialog::~qSlicerSaveDataDialog() = default;
 
 //-----------------------------------------------------------------------------
 qSlicerIO::IOFileType qSlicerSaveDataDialog::fileType()const

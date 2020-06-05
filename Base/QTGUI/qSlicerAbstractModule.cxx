@@ -21,7 +21,7 @@
 // Qt includes
 #include <QAction>
 
-// SlicerQt includes
+// Slicer includes
 #include "qSlicerAbstractModule.h"
 
 class qSlicerAbstractModulePrivate
@@ -45,8 +45,7 @@ qSlicerAbstractModule::qSlicerAbstractModule(QObject* parentObject)
 }
 
 //-----------------------------------------------------------------------------
-qSlicerAbstractModule::~qSlicerAbstractModule()
-= default;
+qSlicerAbstractModule::~qSlicerAbstractModule() = default;
 
 //-----------------------------------------------------------------------------
 QIcon qSlicerAbstractModule::icon()const

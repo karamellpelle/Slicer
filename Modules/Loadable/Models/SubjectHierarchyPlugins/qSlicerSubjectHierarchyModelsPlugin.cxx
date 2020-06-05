@@ -48,7 +48,7 @@
 #include <QStandardItem>
 #include <QAction>
 
-// SlicerQt includes
+// Slicer includes
 #include "qSlicerAbstractModuleWidget.h"
 
 //-----------------------------------------------------------------------------
@@ -82,8 +82,7 @@ void qSlicerSubjectHierarchyModelsPluginPrivate::init()
 }
 
 //-----------------------------------------------------------------------------
-qSlicerSubjectHierarchyModelsPluginPrivate::~qSlicerSubjectHierarchyModelsPluginPrivate()
-= default;
+qSlicerSubjectHierarchyModelsPluginPrivate::~qSlicerSubjectHierarchyModelsPluginPrivate() = default;
 
 //-----------------------------------------------------------------------------
 // qSlicerSubjectHierarchyModelsPlugin methods
@@ -100,8 +99,7 @@ qSlicerSubjectHierarchyModelsPlugin::qSlicerSubjectHierarchyModelsPlugin(QObject
 }
 
 //-----------------------------------------------------------------------------
-qSlicerSubjectHierarchyModelsPlugin::~qSlicerSubjectHierarchyModelsPlugin()
-= default;
+qSlicerSubjectHierarchyModelsPlugin::~qSlicerSubjectHierarchyModelsPlugin() = default;
 
 //----------------------------------------------------------------------------
 double qSlicerSubjectHierarchyModelsPlugin::canAddNodeToSubjectHierarchy(

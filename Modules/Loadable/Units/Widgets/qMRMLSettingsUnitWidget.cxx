@@ -28,7 +28,7 @@
 #include <QDebug>
 #include <QWidget>
 
-// SlicerQt includes
+// Slicer includes
 #include "qMRMLSettingsUnitWidget.h"
 #include "qMRMLUnitWidget.h"
 #include "ui_qMRMLSettingsUnitWidget.h"
@@ -95,8 +95,7 @@ qMRMLSettingsUnitWidget::qMRMLSettingsUnitWidget(QWidget* _parent)
 }
 
 //-----------------------------------------------------------------------------
-qMRMLSettingsUnitWidget::~qMRMLSettingsUnitWidget()
-= default;
+qMRMLSettingsUnitWidget::~qMRMLSettingsUnitWidget() = default;
 
 //-----------------------------------------------------------------------------
 void qMRMLSettingsUnitWidget::setUnitsLogic(vtkSlicerUnitsLogic* logic)

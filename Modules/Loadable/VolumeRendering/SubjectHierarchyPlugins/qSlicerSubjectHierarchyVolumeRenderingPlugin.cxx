@@ -24,7 +24,7 @@
 #include "qSlicerSubjectHierarchyPluginHandler.h"
 #include "qSlicerSubjectHierarchyVolumeRenderingPlugin.h"
 
-// SlicerQt includes
+// Slicer includes
 #include "qSlicerAbstractModuleWidget.h"
 #include "qSlicerApplication.h"
 
@@ -93,8 +93,7 @@ void qSlicerSubjectHierarchyVolumeRenderingPluginPrivate::init()
 }
 
 //-----------------------------------------------------------------------------
-qSlicerSubjectHierarchyVolumeRenderingPluginPrivate::~qSlicerSubjectHierarchyVolumeRenderingPluginPrivate()
-= default;
+qSlicerSubjectHierarchyVolumeRenderingPluginPrivate::~qSlicerSubjectHierarchyVolumeRenderingPluginPrivate() = default;
 
 //-----------------------------------------------------------------------------
 // qSlicerSubjectHierarchyVolumeRenderingPlugin methods
@@ -111,8 +110,7 @@ qSlicerSubjectHierarchyVolumeRenderingPlugin::qSlicerSubjectHierarchyVolumeRende
 }
 
 //-----------------------------------------------------------------------------
-qSlicerSubjectHierarchyVolumeRenderingPlugin::~qSlicerSubjectHierarchyVolumeRenderingPlugin()
-= default;
+qSlicerSubjectHierarchyVolumeRenderingPlugin::~qSlicerSubjectHierarchyVolumeRenderingPlugin() = default;
 
 //-----------------------------------------------------------------------------
 void qSlicerSubjectHierarchyVolumeRenderingPlugin::setVolumeRenderingLogic(vtkSlicerVolumeRenderingLogic* volumeRenderingLogic)
@@ -232,7 +230,7 @@ void qSlicerSubjectHierarchyVolumeRenderingPlugin::showVolumeRenderingOptionsFor
     return;
     }
 
-  qSlicerAbstractModuleWidget* moduleWidget = qSlicerSubjectHierarchyAbstractPlugin::switchToModule("VolumeRendering"); 
+  qSlicerAbstractModuleWidget* moduleWidget = qSlicerSubjectHierarchyAbstractPlugin::switchToModule("VolumeRendering");
   if (moduleWidget)
     {
     // Get node selector combobox

@@ -60,8 +60,7 @@ public:
 // qSlicerMarkupsModulePrivate methods
 
 //-----------------------------------------------------------------------------
-qSlicerMarkupsModulePrivate::qSlicerMarkupsModulePrivate()
-= default;
+qSlicerMarkupsModulePrivate::qSlicerMarkupsModulePrivate() = default;
 
 //-----------------------------------------------------------------------------
 // qSlicerMarkupsModule methods
@@ -80,8 +79,7 @@ QStringList qSlicerMarkupsModule::categories()const
 }
 
 //-----------------------------------------------------------------------------
-qSlicerMarkupsModule::~qSlicerMarkupsModule()
-= default;
+qSlicerMarkupsModule::~qSlicerMarkupsModule() = default;
 
 //-----------------------------------------------------------------------------
 QString qSlicerMarkupsModule::helpText()const
@@ -127,11 +125,10 @@ void qSlicerMarkupsModule::setup()
 
   // Register IO
   qSlicerIOManager* ioManager = qSlicerApplication::application()->ioManager();
-  qSlicerMarkupsReader *markupsIO = new qSlicerMarkupsReader(vtkSlicerMarkupsLogic::SafeDownCast(this->logic()), this);
-  ioManager->registerIO(markupsIO);
-  ioManager->registerIO(new qSlicerNodeWriter(
-                            "MarkupsFiducials", markupsIO->fileType(),
-                            QStringList() << "vtkMRMLMarkupsNode", true, this));
+  qSlicerMarkupsReader *markupsReader = new qSlicerMarkupsReader(vtkSlicerMarkupsLogic::SafeDownCast(this->logic()), this);
+  ioManager->registerIO(markupsReader);
+  ioManager->registerIO(new qSlicerNodeWriter("Markups", "MarkupsFile", QStringList() << "vtkMRMLMarkupsNode", true, this));
+  ioManager->registerIO(new qSlicerNodeWriter("Markups Fiducial", "MarkupsFiducialFile", QStringList() << "vtkMRMLMarkupsFiducialNode", true, this));
 
   // settings
   /*
@@ -173,7 +170,8 @@ QStringList qSlicerMarkupsModule::associatedNodeTypes() const
     << "vtkMRMLMarkupsCurveNode"
     << "vtkMRMLMarkupsClosedCurveNode"
     << "vtkMRMLMarkupsPlaneNode"
-    << "vtkMRMLMarkupsFiducialStorageNode";
+    << "vtkMRMLMarkupsFiducialStorageNode"
+    << "vtkMRMLMarkupsJsonStorageNode";
 }
 
 //-----------------------------------------------------------------------------

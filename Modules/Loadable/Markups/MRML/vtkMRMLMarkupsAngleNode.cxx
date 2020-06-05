@@ -18,7 +18,6 @@
 // MRML includes
 #include "vtkMRMLMarkupsDisplayNode.h"
 #include "vtkMRMLMarkupsAngleNode.h"
-#include "vtkMRMLMarkupsFiducialStorageNode.h"
 #include "vtkMRMLScene.h"
 
 // VTK includes
@@ -40,8 +39,7 @@ vtkMRMLMarkupsAngleNode::vtkMRMLMarkupsAngleNode()
 }
 
 //----------------------------------------------------------------------------
-vtkMRMLMarkupsAngleNode::~vtkMRMLMarkupsAngleNode()
-= default;
+vtkMRMLMarkupsAngleNode::~vtkMRMLMarkupsAngleNode() = default;
 
 //----------------------------------------------------------------------------
 void vtkMRMLMarkupsAngleNode::WriteXML(ostream& of, int nIndent)
@@ -65,7 +63,7 @@ void vtkMRMLMarkupsAngleNode::PrintSelf(ostream& os, vtkIndent indent)
 void vtkMRMLMarkupsAngleNode::UpdateMeasurements()
 {
   this->RemoveAllMeasurements();
-  if (this->GetNumberOfDefinedControlPoints() == 3)
+  if (this->GetNumberOfDefinedControlPoints(true) == 3)
     {
     double p1[3] = { 0.0 };
     double c[3] = { 0.0 };

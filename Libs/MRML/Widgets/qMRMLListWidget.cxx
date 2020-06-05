@@ -18,7 +18,7 @@
 
 ==============================================================================*/
 
-// QT includes
+// Qt includes
 #include <QSortFilterProxyModel>
 
 // CTK includes
@@ -82,8 +82,7 @@ qMRMLListWidget::qMRMLListWidget(QWidget *_parent)
 }
 
 //------------------------------------------------------------------------------
-qMRMLListWidget::~qMRMLListWidget()
-= default;
+qMRMLListWidget::~qMRMLListWidget() = default;
 
 //------------------------------------------------------------------------------
 void qMRMLListWidget::setMRMLScene(vtkMRMLScene* scene)

@@ -42,14 +42,10 @@ static const char NODE_BASE_NAME_SEPARATOR[] = "-";
 vtkMRMLNodeNewMacro(vtkMRMLLinearTransformSequenceStorageNode);
 
 //----------------------------------------------------------------------------
-vtkMRMLLinearTransformSequenceStorageNode::vtkMRMLLinearTransformSequenceStorageNode()
-{
-}
+vtkMRMLLinearTransformSequenceStorageNode::vtkMRMLLinearTransformSequenceStorageNode() = default;
 
 //----------------------------------------------------------------------------
-vtkMRMLLinearTransformSequenceStorageNode::~vtkMRMLLinearTransformSequenceStorageNode()
-{
-}
+vtkMRMLLinearTransformSequenceStorageNode::~vtkMRMLLinearTransformSequenceStorageNode() = default;
 
 //----------------------------------------------------------------------------
 bool vtkMRMLLinearTransformSequenceStorageNode::CanReadInReferenceNode(vtkMRMLNode *refNode)

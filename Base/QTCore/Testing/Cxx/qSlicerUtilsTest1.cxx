@@ -18,7 +18,7 @@
 
 ==============================================================================*/
 
-// QT includes
+// Qt includes
 #include <QDir>
 #include <QStringList>
 #include <QTextStream>
@@ -27,7 +27,7 @@
 // CTK includes
 #include <ctkUtils.h>
 
-// SlicerQt includes
+// Slicer includes
 #include <qSlicerUtils.h>
 
 // Slicer includes

@@ -29,7 +29,7 @@
 // C++ includes
 #include <cmath>
 
-// SlicerQt includes
+// Slicer includes
 #include "qSlicerTransformsModuleWidget.h"
 #include "ui_qSlicerTransformsModuleWidget.h"
 
@@ -110,8 +110,7 @@ qSlicerTransformsModuleWidget::qSlicerTransformsModuleWidget(QWidget* _parentWid
 }
 
 //-----------------------------------------------------------------------------
-qSlicerTransformsModuleWidget::~qSlicerTransformsModuleWidget()
-= default;
+qSlicerTransformsModuleWidget::~qSlicerTransformsModuleWidget() = default;
 
 //-----------------------------------------------------------------------------
 void qSlicerTransformsModuleWidget::setup()

@@ -26,7 +26,7 @@
 //  - Slicer_USE_PYTHONQT
 #include "vtkSlicerConfigure.h"
 
-// SlicerQt includes
+// Slicer includes
 #include "qSlicerLoadableModuleFactory.h"
 #include "qSlicerCoreApplication.h"
 #include "qSlicerUtils.h"
@@ -35,8 +35,7 @@
 #include <vtksys/SystemTools.hxx>
 
 //-----------------------------------------------------------------------------
-qSlicerLoadableModuleFactoryItem::qSlicerLoadableModuleFactoryItem()
-= default;
+qSlicerLoadableModuleFactoryItem::qSlicerLoadableModuleFactoryItem() = default;
 
 //-----------------------------------------------------------------------------
 qSlicerAbstractCoreModule* qSlicerLoadableModuleFactoryItem::instanciator()
@@ -108,8 +107,7 @@ qSlicerLoadableModuleFactory::qSlicerLoadableModuleFactory()
 }
 
 //-----------------------------------------------------------------------------
-qSlicerLoadableModuleFactory::~qSlicerLoadableModuleFactory()
-= default;
+qSlicerLoadableModuleFactory::~qSlicerLoadableModuleFactory() = default;
 
 //-----------------------------------------------------------------------------
 void qSlicerLoadableModuleFactory::registerItems()

@@ -22,7 +22,7 @@
 #include <QProcess>
 #include <QStandardPaths>
 
-// SlicerQt includes
+// Slicer includes
 #include "qSlicerCLIExecutableModuleFactory.h"
 #include "qSlicerCLIModule.h"
 #include "qSlicerCLIModuleFactoryHelper.h"
@@ -254,8 +254,7 @@ qSlicerCLIExecutableModuleFactory::qSlicerCLIExecutableModuleFactory()
 }
 
 //-----------------------------------------------------------------------------
-qSlicerCLIExecutableModuleFactory::~qSlicerCLIExecutableModuleFactory()
-= default;
+qSlicerCLIExecutableModuleFactory::~qSlicerCLIExecutableModuleFactory() = default;
 
 //-----------------------------------------------------------------------------
 void qSlicerCLIExecutableModuleFactory::registerItems()

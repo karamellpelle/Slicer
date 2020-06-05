@@ -21,7 +21,7 @@
 // Qt includes
 #include <QFileInfo>
 
-// SlicerQt includes
+// Slicer includes
 #include "qSlicerSequencesReader.h"
 #include "qSlicerSequencesModule.h"
 
@@ -58,9 +58,7 @@ qSlicerSequencesReader::qSlicerSequencesReader(vtkSlicerSequencesLogic* sequence
 }
 
 //-----------------------------------------------------------------------------
-qSlicerSequencesReader::~qSlicerSequencesReader()
-{
-}
+qSlicerSequencesReader::~qSlicerSequencesReader() = default;
 
 //-----------------------------------------------------------------------------
 void qSlicerSequencesReader::setSequencesLogic(vtkSlicerSequencesLogic* newSequencesLogic)

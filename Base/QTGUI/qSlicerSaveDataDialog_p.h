@@ -18,7 +18,7 @@
 #include <QFileInfo>
 #include <QStyledItemDelegate>
 
-// SlicerQt includes
+// Slicer includes
 #include "qSlicerIOOptions.h"
 #include "qSlicerSaveDataDialog.h"
 #include "ui_qSlicerSaveDataDialog.h"
@@ -125,6 +125,9 @@ protected:
 
   vtkMRMLScene* MRMLScene;
   QString MRMLSceneRootDirectoryBeforeSaving;
+
+  // Items are currently being added to the scene, indicates that no GUI updates should be performed.
+  bool PopulatingItems;
 
   friend class qSlicerFileNameItemDelegate;
 };

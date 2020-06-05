@@ -32,14 +32,10 @@ or http://www.slicer.org/copyright/copyright.txt for details.
 vtkMRMLNodeNewMacro(vtkMRMLVolumeSequenceStorageNode);
 
 //----------------------------------------------------------------------------
-vtkMRMLVolumeSequenceStorageNode::vtkMRMLVolumeSequenceStorageNode()
-{
-}
+vtkMRMLVolumeSequenceStorageNode::vtkMRMLVolumeSequenceStorageNode() = default;
 
 //----------------------------------------------------------------------------
-vtkMRMLVolumeSequenceStorageNode::~vtkMRMLVolumeSequenceStorageNode()
-{
-}
+vtkMRMLVolumeSequenceStorageNode::~vtkMRMLVolumeSequenceStorageNode() = default;
 
 //----------------------------------------------------------------------------
 bool vtkMRMLVolumeSequenceStorageNode::CanReadInReferenceNode(vtkMRMLNode *refNode)

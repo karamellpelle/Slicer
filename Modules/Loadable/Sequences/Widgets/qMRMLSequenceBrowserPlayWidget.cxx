@@ -84,9 +84,7 @@ qMRMLSequenceBrowserPlayWidget::qMRMLSequenceBrowserPlayWidget(QWidget *newParen
 }
 
 //-----------------------------------------------------------------------------
-qMRMLSequenceBrowserPlayWidget::~qMRMLSequenceBrowserPlayWidget()
-{
-}
+qMRMLSequenceBrowserPlayWidget::~qMRMLSequenceBrowserPlayWidget() = default;
 
 //-----------------------------------------------------------------------------
 void qMRMLSequenceBrowserPlayWidget::setMRMLSequenceBrowserNode(vtkMRMLNode* browserNode)

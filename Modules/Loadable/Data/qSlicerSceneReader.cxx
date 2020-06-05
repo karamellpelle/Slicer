@@ -30,7 +30,7 @@
 // MRML includes
 #include <vtkMRMLScene.h>
 
-// SlicerQt includes
+// Slicer includes
 #include "qSlicerCoreApplication.h"
 #include "qSlicerCoreIOManager.h"
 
@@ -51,8 +51,7 @@ qSlicerSceneReader::qSlicerSceneReader(vtkSlicerCamerasModuleLogic* camerasLogic
 }
 
 //-----------------------------------------------------------------------------
-qSlicerSceneReader::~qSlicerSceneReader()
-= default;
+qSlicerSceneReader::~qSlicerSceneReader() = default;
 
 //-----------------------------------------------------------------------------
 QString qSlicerSceneReader::description()const

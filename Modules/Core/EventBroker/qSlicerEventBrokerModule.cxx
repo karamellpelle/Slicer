@@ -18,7 +18,7 @@
 
 ==============================================================================*/
 
-// SlicerQt includes
+// Slicer includes
 #include "qSlicerEventBrokerModule.h"
 #include "qSlicerEventBrokerModuleWidget.h"
 
@@ -36,8 +36,7 @@ qSlicerEventBrokerModule::qSlicerEventBrokerModule(QObject* _parent)
 }
 
 //-----------------------------------------------------------------------------
-qSlicerEventBrokerModule::~qSlicerEventBrokerModule()
-= default;
+qSlicerEventBrokerModule::~qSlicerEventBrokerModule() = default;
 
 //-----------------------------------------------------------------------------
 qSlicerAbstractModuleRepresentation * qSlicerEventBrokerModule::createWidgetRepresentation()

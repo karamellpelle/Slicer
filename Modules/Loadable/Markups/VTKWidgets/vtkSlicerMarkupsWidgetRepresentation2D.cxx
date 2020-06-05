@@ -100,8 +100,7 @@ vtkSlicerMarkupsWidgetRepresentation2D::ControlPointsPipeline2D::ControlPointsPi
   this->LabelsActor->SetMapper(this->LabelsMapper);
 }
 
-vtkSlicerMarkupsWidgetRepresentation2D::ControlPointsPipeline2D::~ControlPointsPipeline2D()
-= default;
+vtkSlicerMarkupsWidgetRepresentation2D::ControlPointsPipeline2D::~ControlPointsPipeline2D() = default;
 
 //----------------------------------------------------------------------
 vtkSlicerMarkupsWidgetRepresentation2D::vtkSlicerMarkupsWidgetRepresentation2D()
@@ -130,8 +129,7 @@ vtkSlicerMarkupsWidgetRepresentation2D::vtkSlicerMarkupsWidgetRepresentation2D()
 }
 
 //----------------------------------------------------------------------
-vtkSlicerMarkupsWidgetRepresentation2D::~vtkSlicerMarkupsWidgetRepresentation2D()
-= default;
+vtkSlicerMarkupsWidgetRepresentation2D::~vtkSlicerMarkupsWidgetRepresentation2D() = default;
 
 //----------------------------------------------------------------------
 void vtkSlicerMarkupsWidgetRepresentation2D::GetSliceToWorldCoordinates(const double slicePos[2],
@@ -464,11 +462,17 @@ void vtkSlicerMarkupsWidgetRepresentation2D::UpdateFromMRML(vtkMRMLNode* caller,
   this->UpdateControlPointSize();
 
   // Points widgets have only one Markup/Representation
+  this->AnyPointVisibilityOnSlice = false;
   for (int pointIndex = 0; pointIndex < markupsNode->GetNumberOfControlPoints(); pointIndex++)
     {
     bool visibility =  this->IsControlPointDisplayableOnSlice(markupsNode, pointIndex);
+    if (visibility)
+      {
+      this->AnyPointVisibilityOnSlice = true;
+      }
     this->SetNthControlPointSliceVisibility(pointIndex, visibility);
     }
+
   if (markupsNode->GetCurveClosed())
     {
     bool visibility = this->IsCenterDisplayableOnSlice(markupsNode);
@@ -743,7 +747,7 @@ int vtkSlicerMarkupsWidgetRepresentation2D::RenderOverlay(vtkViewport *viewport)
   if (this->TextActor->GetVisibility())
     {
     count += this->TextActor->RenderOverlay(viewport);
-}
+    }
   return count;
 }
 

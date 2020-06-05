@@ -18,9 +18,7 @@
 #include "qSlicerSequencesModuleWidgetsAbstractPlugin.h"
 
 //-----------------------------------------------------------------------------
-qSlicerSequencesModuleWidgetsAbstractPlugin::qSlicerSequencesModuleWidgetsAbstractPlugin()
-{
-}
+qSlicerSequencesModuleWidgetsAbstractPlugin::qSlicerSequencesModuleWidgetsAbstractPlugin() = default;
 
 //-----------------------------------------------------------------------------
 QString qSlicerSequencesModuleWidgetsAbstractPlugin::group() const

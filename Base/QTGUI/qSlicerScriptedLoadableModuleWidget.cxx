@@ -27,7 +27,7 @@
 // VTK includes
 #include <vtkPythonUtil.h>
 
-// SlicerQt includes
+// Slicer includes
 #include "qSlicerScriptedLoadableModuleWidget.h"
 #include "qSlicerScriptedUtils_p.h"
 
@@ -69,8 +69,7 @@ qSlicerScriptedLoadableModuleWidgetPrivate::qSlicerScriptedLoadableModuleWidgetP
 }
 
 //-----------------------------------------------------------------------------
-qSlicerScriptedLoadableModuleWidgetPrivate::~qSlicerScriptedLoadableModuleWidgetPrivate()
-= default;
+qSlicerScriptedLoadableModuleWidgetPrivate::~qSlicerScriptedLoadableModuleWidgetPrivate() = default;
 
 //-----------------------------------------------------------------------------
 // qSlicerScriptedLoadableModuleWidget methods
@@ -83,9 +82,7 @@ qSlicerScriptedLoadableModuleWidget::qSlicerScriptedLoadableModuleWidget(QWidget
 }
 
 //-----------------------------------------------------------------------------
-qSlicerScriptedLoadableModuleWidget::~qSlicerScriptedLoadableModuleWidget()
-{
-}
+qSlicerScriptedLoadableModuleWidget::~qSlicerScriptedLoadableModuleWidget() = default;
 
 //-----------------------------------------------------------------------------
 QString qSlicerScriptedLoadableModuleWidget::pythonSource()const

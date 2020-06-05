@@ -1,7 +1,7 @@
 #ifndef __qSlicerSceneViewsModuleWidget_h
 #define __qSlicerSceneViewsModuleWidget_h
 
-// SlicerQT includes
+// Slicer includes
 #include "qSlicerAbstractModuleWidget.h"
 #include "qSlicerSceneViewsModuleExport.h"
 

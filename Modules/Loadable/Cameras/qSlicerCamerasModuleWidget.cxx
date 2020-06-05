@@ -18,7 +18,7 @@
 
 ==============================================================================*/
 
-// SlicerQt includes
+// Slicer includes
 #include "qSlicerCamerasModuleWidget.h"
 #include "ui_qSlicerCamerasModuleWidget.h"
 #include "vtkSlicerCamerasModuleLogic.h"
@@ -44,8 +44,7 @@ qSlicerCamerasModuleWidget::qSlicerCamerasModuleWidget(QWidget* _parent)
 }
 
 //-----------------------------------------------------------------------------
-qSlicerCamerasModuleWidget::~qSlicerCamerasModuleWidget()
-= default;
+qSlicerCamerasModuleWidget::~qSlicerCamerasModuleWidget() = default;
 
 //-----------------------------------------------------------------------------
 void qSlicerCamerasModuleWidget::setup()
