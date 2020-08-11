@@ -162,6 +162,9 @@ bool qSlicerSubjectHierarchyPluginHandler::registerPlugin(qSlicerSubjectHierarch
   // Add the plugin to the list
   this->m_RegisteredPlugins << pluginToRegister;
 
+  // Update timestamp
+  this->LastPluginRegistrationTime = QDateTime::currentDateTimeUtc();
+
   return true;
 }
 
@@ -462,7 +465,7 @@ void qSlicerSubjectHierarchyPluginHandler::setPluginLogic(qSlicerSubjectHierarch
   // Register view menu actions of those plugins that were registered before the PluginLogic was set.
   if (this->m_PluginLogic)
     {
-    foreach(qSlicerSubjectHierarchyAbstractPlugin * pluginToRegister, this->m_RegisteredPlugins)
+    foreach(qSlicerSubjectHierarchyAbstractPlugin* pluginToRegister, this->m_RegisteredPlugins)
       {
       foreach(QAction * action, pluginToRegister->viewContextMenuActions())
         {
@@ -499,6 +502,21 @@ void qSlicerSubjectHierarchyPluginHandler::setCurrentItems(QList<vtkIdType> item
 QList<vtkIdType> qSlicerSubjectHierarchyPluginHandler::currentItems()
 {
   return this->m_CurrentItems;
+}
+
+//------------------------------------------------------------------------------
+void qSlicerSubjectHierarchyPluginHandler::currentItems(vtkIdList* selectedItems)
+{
+  if (!selectedItems)
+    {
+    qCritical() << Q_FUNC_INFO << ": Invalid item list";
+    return;
+    }
+
+  foreach (vtkIdType item, this->m_CurrentItems)
+    {
+    selectedItems->InsertNextId(item);
+    }
 }
 
 //-----------------------------------------------------------------------------

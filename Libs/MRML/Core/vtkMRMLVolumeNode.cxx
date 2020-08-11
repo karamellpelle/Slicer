@@ -14,7 +14,10 @@ Version:   $Revision: 1.14 $
 
 // MRML includes
 #include "vtkEventBroker.h"
+#include "vtkMRMLLinearTransformNode.h"
 #include "vtkMRMLScalarVolumeDisplayNode.h"
+#include "vtkMRMLScene.h"
+#include "vtkMRMLSubjectHierarchyNode.h"
 #include "vtkMRMLVolumeNode.h"
 #include "vtkMRMLTransformNode.h"
 
@@ -893,9 +896,10 @@ void vtkMRMLVolumeNode::GetRASBounds(double bounds[6])
 }
 
 //---------------------------------------------------------------------------
-void vtkMRMLVolumeNode::GetSliceBounds(double bounds[6], vtkMatrix4x4* rasToSlice)
+void vtkMRMLVolumeNode::GetSliceBounds(double bounds[6],
+  vtkMatrix4x4* rasToSlice, bool useVoxelCenter/*=false*/)
 {
-  vtkMRMLVolumeNode::GetBoundsInternal(bounds, rasToSlice, true);
+  vtkMRMLVolumeNode::GetBoundsInternal(bounds, rasToSlice, true, useVoxelCenter);
 }
 
 //---------------------------------------------------------------------------
@@ -906,8 +910,7 @@ void vtkMRMLVolumeNode::GetBounds(double bounds[6])
 
 //---------------------------------------------------------------------------
 void vtkMRMLVolumeNode::GetBoundsInternal(double bounds[6],
-                                          vtkMatrix4x4* rasToSlice,
-                                          bool useTransform)
+  vtkMatrix4x4* rasToSlice, bool useTransform, bool useVoxelCenter/*=false*/)
 {
   vtkMath::UninitializeBounds(bounds);
   vtkImageData *volumeImage = this->GetImageData();
@@ -955,11 +958,22 @@ void vtkMRMLVolumeNode::GetBoundsInternal(double bounds[6],
       {
       for (int k=0; k<2; k++)
         {
-        doubleDimensions[0] = i*(dimensions[0]) - 0.5;
-        doubleDimensions[1] = j*(dimensions[1]) - 0.5;
-        doubleDimensions[2] = k*(dimensions[2]) - 0.5;
-        double* rasHDimensions = transform->TransformDoublePoint(doubleDimensions);
-        boundingBox.AddPoint(rasHDimensions);
+        if (useVoxelCenter)
+          {
+          doubleDimensions[0] = i * (dimensions[0] - 1);
+          doubleDimensions[1] = j * (dimensions[1] - 1);
+          doubleDimensions[2] = k * (dimensions[2] - 1);
+          double* rasHDimensions = transform->TransformDoublePoint(doubleDimensions);
+          boundingBox.AddPoint(rasHDimensions);
+          }
+        else
+          {
+          doubleDimensions[0] = i * dimensions[0] - 0.5;
+          doubleDimensions[1] = j * dimensions[1] - 0.5;
+          doubleDimensions[2] = k * dimensions[2] - 0.5;
+          double* rasHDimensions = transform->TransformDoublePoint(doubleDimensions);
+          boundingBox.AddPoint(rasHDimensions);
+          }
         }
       }
     }
@@ -1169,4 +1183,97 @@ void vtkMRMLVolumeNode::CreateDefaultSequenceDisplayNodes()
     {
     scalarVolumeDisplayNode->AutoWindowLevelOff();
     }
+}
+
+//------------------------------------------------------------------------------
+bool vtkMRMLVolumeNode::IsCentered()
+{
+  double centerPosition[3] = { 0.0, 0.0, 0.0 };
+  this->GetCenterPositionRAS(centerPosition);
+  double tolerance = this->GetMaxSpacing() * 0.1;
+  bool centered = (fabs(centerPosition[0]) <= tolerance
+    && fabs(centerPosition[1]) <= tolerance
+    && fabs(centerPosition[2]) <= tolerance);
+  return centered;
+}
+
+//------------------------------------------------------------------------------
+void vtkMRMLVolumeNode::GetCenterPositionRAS(double* centerPositionRAS, bool useParentTransform/*=true*/)
+{
+  vtkImageData* imageData = this->GetImageData();
+  if (!imageData)
+    {
+    centerPositionRAS[0] = 0.0;
+    centerPositionRAS[1] = 0.0;
+    centerPositionRAS[2] = 0.0;
+    return;
+    }
+
+  int* extent = imageData->GetExtent();
+  double centerPositionIJK[4] =
+    {
+    double(extent[0] + extent[1]) / 2.0,
+    double(extent[2] + extent[3]) / 2.0,
+    double(extent[4] + extent[5]) / 2.0,
+    1.0
+    };
+
+  vtkNew<vtkMatrix4x4> ijkToRasMatrix;
+  this->GetIJKToRASMatrix(ijkToRasMatrix);
+  double centerPositionRAS1[4] = { 0.0, 0.0, 0.0, 1.0 };
+  ijkToRasMatrix->MultiplyPoint(centerPositionIJK, centerPositionRAS1);
+
+  if (useParentTransform)
+    {
+    vtkNew<vtkGeneralTransform> volumeRasToRasTransform;
+    vtkMRMLTransformNode::GetTransformBetweenNodes(this->GetParentTransformNode(), nullptr, volumeRasToRasTransform);
+    volumeRasToRasTransform->TransformPoint(centerPositionRAS1, centerPositionRAS1);
+    }
+
+  centerPositionRAS[0] = centerPositionRAS1[0];
+  centerPositionRAS[1] = centerPositionRAS1[1];
+  centerPositionRAS[2] = centerPositionRAS1[2];
+}
+
+//------------------------------------------------------------------------------
+bool vtkMRMLVolumeNode::AddCenteringTransform()
+{
+  if (this->IsCentered())
+    {
+    // already centered (without changing parent transform)
+    return false;
+    }
+  this->SetAndObserveTransformNodeID(nullptr);
+  if (this->IsCentered())
+    {
+    // already centered (without adding a transform), no need to add a parent transform
+    return true;
+    }
+  double centerPositionRAS[3];
+  this->GetCenterPositionRAS(centerPositionRAS, false);
+  vtkMRMLScene* scene = this->GetScene();
+  if (!scene)
+    {
+    vtkErrorMacro("vtkMRMLVolumeNode::AddCenteringTransform failed: invalid scene");
+    return false;
+    }
+  std::string transformName = this->GetName();
+  transformName.append(" centering transform");
+  vtkMRMLLinearTransformNode* centeringTransform = vtkMRMLLinearTransformNode::SafeDownCast(
+    scene->AddNewNodeByClass("vtkMRMLLinearTransformNode", transformName));
+  vtkNew<vtkMatrix4x4> centeringTransformMatrix;
+  centeringTransformMatrix->SetElement(0, 3, -centerPositionRAS[0]);
+  centeringTransformMatrix->SetElement(1, 3, -centerPositionRAS[1]);
+  centeringTransformMatrix->SetElement(2, 3, -centerPositionRAS[2]);
+  centeringTransform->SetAndObserveMatrixTransformToParent(centeringTransformMatrix);
+  this->SetAndObserveTransformNodeID(centeringTransform->GetID());
+
+  // Place transform in the same subject hierarchy folder as the volume node
+  vtkMRMLSubjectHierarchyNode* shNode = vtkMRMLSubjectHierarchyNode::GetSubjectHierarchyNode(scene);
+  if (shNode)
+    {
+    vtkIdType volumeParentItemId = shNode->GetItemParent(shNode->GetItemByDataNode(this));
+    shNode->SetItemParent(shNode->GetItemByDataNode(centeringTransform), volumeParentItemId);
+    }
+  return true;
 }

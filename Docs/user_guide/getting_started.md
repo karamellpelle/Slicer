@@ -6,32 +6,37 @@ Welcome to the 3D Slicer community. This page contains information that you need
 
 3D Slicer runs on any Windows, Mac, or Linux computer that was released in the last 5 years. Older computers may work (depending mainly on graphics capabilites). Slicer can also run on virtual machines and docker containers.
 
+### Operating system versions
+
+|               |Windows                                        |macOS                             |Linux                                     |
+|---------------|-----------------------------------------------|----------------------------------|------------------------------------------|
+|Stable Release |Windows 10 or later<br>Windows 8.1<br>Windows 7|OS X Mavericks (10.9) or later    |Ubuntu 16.04 or later<br>CentOS 7 or later|
+|Preview Release|Windows 10 or later<br>Windows 8.1<br>Windows 7|macOS High Sierra (10.13) or later|Ubuntu 18.04 or later<br>CentOS 7 or later|
+
+**Notes:**
+- It is always recommended to use the latest public release of Windows or macOS. For Linux, this would be the latest LTS (Long-term-support) version.
+- Slicer is expected to work on the vast majority of desktop and server Linux distributions. The system is required to provide at least GLIBC 2.17 and GLIBCCC 3.4.19. For more details, read [here](https://www.python.org/dev/peps/pep-0599/#the-manylinux2014-policy).
+- Only 64-bit Slicer installers are available to download. Developers can attempt to build 32-bit versions on their own if they need to run Slicer on a 32-bit operating system. That said, this should be carefully considered as many clinical research tasks, such as processing of large CT or MR volumetric datasets, require more memory than can be accommodated with a 32-bit program.
+
 ### Recommended hardware configuration:
 - Memory: more than 4GB (8 or more is recommended). As a general rule, have 10x more memory than the amount of data that you load.
 - Display: a minimum resolution of 1024 by 768 (1280 by 1024 or better is recommended).
 - Graphics: . Dedicated graphics hardware (discrete GPU) memory is recommended for fast volume rendering.
 GPU: Graphics must support minimum OpenGL 3.2. Integrated graphics card is sufficient for basic visualization. Discrete graphics card (such as NVidia GPU) is recommended for interactive 3D volume rendering and fast rendering of complex scenes. GPU texture memory (VRAM) should be larger than your largest dataset (e.g., working with 2GB data, get VRAM > 4GB) and check that your images fit in maximum texture dimensions of your GPU hardware. Except rendering, most calculations are performed on CPU, therefore having a faster GPU will generally not impact the overall speed of the application.
-- Some computations in 3D Slicer are multi-threaded and will benefit from multi core, multi CPU configurations. Minimum Intel Core i5 CPU is recommended. On desktop computers, Intel Core i7 CPU is recommended.
+- Some computations in 3D Slicer are multi-threaded and will benefit from multi core, multi CPU configurations.
 - Interface device: a three button mouse with scroll wheel is recommended. Pen, multi-touchscreen, touchpad, and graphic tablet are supported. All OpenVR-compatible virtual reality headsets are supported for virtual reality display.
 - Internet connection to access extensions, Python packages, online documentation, sample data sets, and tutorials.
-
-### Recommended operating system versions
-- Windows 10, 64-bit
-- Mac OS X Lion
-  - On Mac OS X Maverick - Make sure to install this update: http://support.apple.com/kb/DL1754
-- Linux: recent versions of popular distributions should work. Ubuntu and Fedora are the most widely used distribution among the developers. The SlicerPreview nightly build system runs CentOS 7.
-
-32 bit versus 64 bit: Many clinical research tasks, such as processing of large CT or MR volumetric datasets, require more memory than can be accommodated with a 32 bit program. Therefore, we only make 64-bit Slicer versions available. Developers can build 32-bit version on their own if they need to run Slicer on a 32-bit operating system.
 
 ## Installing 3D Slicer
 
 To download Slicer, click [here](http://download.slicer.org/).
 
-![SlicerInstallers-2020-03-25](https://github.com/Slicer/Slicer/releases/download/docs-resources/getting_started_download.png)
+![](https://github.com/Slicer/Slicer/releases/download/docs-resources/getting_started_download.png)
 
-The "Preview Release" of 3D Slicer is updated every night and contains latest developments: new features and fixes. The "Stable Release" is updated about once a year nightly and is more rigorously tested.
+The "Preview Release" of 3D Slicer is updated daily (process starts at 11pm ET and takes few hours to complete) and represents the latest development including new features and fixes.
+The "Stable Release" is usually updated a few times a year and is more rigorously tested.
 
-Slicer is generally simple to install on all platforms. It is possible to install multiple versions of the application on the same user account and they will not interfere with each other. If you run into mysterious problems with your installation you can try deleting the [Settings Files](settings.html#settings-file-location).
+Slicer is generally simple to install on all platforms. It is possible to install multiple versions of the application on the same user account and they will not interfere with each other. If you run into mysterious problems with your installation you can try deleting the [application settings files](settings.html#settings-file-location).
 
 Once downloaded, follow the instructions below to complete installation:
 
@@ -43,9 +48,11 @@ Once downloaded, follow the instructions below to complete installation:
 
 ### Mac
 
-- Drag the Slicer application to your Applications folder or other location of your choice.
+- Drag the Slicer application (Slicer.app) to your Applications folder or other location of your choice.
 - You cannot install extensions into the read-only volume so you must copy before installing extensions.
 - Delete the Slicer.app folder to uninstall
+
+Installing Preview Release: Currently, preview release packages are not signed. Therefore, when the application is started the first time the following message is displayed: "Slicer... can't be opened because it is from an unidentified developer". To resolve this error, locate the application in Finder and right-click (two-finger click) and click `Open`. When it says `This app can’t be opened` go ahead and hit cancel. Right click again and say `Open` (yes, you need to repeat the same as you did before - the outcome will be different than the first time). Click the `Open` (or `Open anyway`) button to start the application. See more explanation and alternative techniques [here](https://support.apple.com/en-my/guide/mac-help/mh40616/mac).
 
 ### Linux
 

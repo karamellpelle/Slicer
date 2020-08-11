@@ -31,8 +31,11 @@ For Slicer-4.10 documentation, refer to the `3D Slicer wiki <https://www.slicer.
    :maxdepth: 3
    :caption: Developer Guide:
 
+   developer_guide/build_instructions/index.rst
    developer_guide/api
    developer_guide/mrml_overview
+   developer_guide/extensions
+   developer_guide/python_faq
    developer_guide/contributing
    developer_guide/authors
 

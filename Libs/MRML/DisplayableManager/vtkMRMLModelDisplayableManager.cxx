@@ -14,7 +14,6 @@
 
 // MRML/Slicer includes
 #include <vtkEventBroker.h>
-#include <vtkFSLookupTable.h>
 #include <vtkMRMLClipModelsNode.h>
 #include <vtkMRMLColorNode.h>
 #include <vtkMRMLDisplayNode.h>
@@ -622,12 +621,12 @@ void vtkMRMLModelDisplayableManager::ProcessMRMLNodesEvents(vtkObject *caller,
           break;
           } // else fall through
       case vtkCommand::ModifiedEvent:
-        VTK_FALLTHROUGH;
       case vtkMRMLModelNode::MeshModifiedEvent:
+      case vtkMRMLTransformableNode::TransformModifiedEvent:
         requestRender = this->OnMRMLDisplayableModelNodeModifiedEvent(displayableNode);
         break;
       default:
-        this->SetUpdateFromMRMLRequested(true);
+        // We don't expect any other types of events.
         break;
       }
     if (!isUpdating && requestRender)
@@ -857,9 +856,7 @@ bool vtkMRMLModelDisplayableManager::OnMRMLDisplayableModelNodeModifiedEvent(
     }
   if (updateModel)
     {
-    this->UpdateClipSlicesFromMRML();
     this->UpdateModifiedModel(modelNode);
-    this->SetUpdateFromMRMLRequested(true);
     }
   if (updateMRML)
     {
@@ -892,7 +889,7 @@ void vtkMRMLModelDisplayableManager::UpdateFromMRML()
 void vtkMRMLModelDisplayableManager::UpdateModelsFromMRML()
 {
   // UpdateModelsFromMRML may recursively trigger calling of UpdateModelsFromMRML
-  // via node reference updates. IsUdatingModelsFromMRML flag prevents restarting
+  // via node reference updates. IsUpdatingModelsFromMRML flag prevents restarting
   // UpdateModelsFromMRML if it is already in progress.
   if (this->Internal->IsUpdatingModelsFromMRML)
     {
@@ -1530,11 +1527,9 @@ void vtkMRMLModelDisplayableManager::SetModelDisplayProperty(vtkMRMLDisplayableN
           // values range. It is therefore necessary to make a copy
           // of the colorNode vtkLookupTable in order not to impact
           // that lookup table original range.
-          vtkLookupTable* dNodeLUT = displayNode->GetColorNode() ?
-            displayNode->GetColorNode()->GetLookupTable() : nullptr;
-          vtkSmartPointer<vtkLookupTable> lut = vtkSmartPointer<vtkLookupTable>::Take(
-            vtkMRMLModelDisplayableManager::CreateLookupTableCopy(dNodeLUT));
-          mapper->SetLookupTable(lut.GetPointer());
+          vtkSmartPointer<vtkLookupTable> dNodeLUT = vtkSmartPointer<vtkLookupTable>::Take(displayNode->GetColorNode() ?
+            displayNode->GetColorNode()->CreateLookupTableCopy() : nullptr);
+          mapper->SetLookupTable(dNodeLUT);
           }
 
         // Set scalar range
@@ -1594,6 +1589,37 @@ void vtkMRMLModelDisplayableManager::SetModelDisplayProperty(vtkMRMLDisplayableN
         actor->SetTexture(nullptr);
         actor->ForceOpaqueOff();
         }
+
+      // Set backface properties
+      vtkProperty* actorBackfaceProperties = actor->GetBackfaceProperty();
+      if (!actorBackfaceProperties)
+        {
+        vtkNew<vtkProperty> newActorBackfaceProperties;
+        actor->SetBackfaceProperty(newActorBackfaceProperties);
+        actorBackfaceProperties = newActorBackfaceProperties;
+        }
+      actorBackfaceProperties->DeepCopy(actorProperties);
+
+      double offsetHsv[3];
+      modelDisplayNode->GetBackfaceColorHSVOffset(offsetHsv);
+
+      double colorHsv[3];
+      vtkMath::RGBToHSV(actorProperties->GetColor(), colorHsv);
+      double colorRgb[3];
+      colorHsv[0] += offsetHsv[0];
+      // wrap around hue value
+      if (colorHsv[0] < 0.0)
+        {
+        colorHsv[0] += 1.0;
+        }
+      else if (colorHsv[0] > 1.0)
+        {
+        colorHsv[0] -= 1.0;
+        }
+      colorHsv[1] = vtkMath::ClampValue<double>(colorHsv[1] + offsetHsv[1], 0, 1);
+      colorHsv[2] = vtkMath::ClampValue<double>(colorHsv[2] + offsetHsv[2], 0, 1);
+      vtkMath::HSVToRGB(colorHsv, colorRgb);
+      actorBackfaceProperties->SetColor(colorRgb);
       }
     else if (imageActor)
       {
@@ -2087,26 +2113,4 @@ void vtkMRMLModelDisplayableManager::OnInteractorStyleEvent(int eventid)
   this->PassThroughInteractorStyleEvent(eventid);
 
   return;
-}
-
-//---------------------------------------------------------------------------
-vtkLookupTable* vtkMRMLModelDisplayableManager::CreateLookupTableCopy(vtkLookupTable* sourceLut)
-{
-  vtkLookupTable* copiedLut = nullptr;
-  vtkFSLookupTable* sourceLutFS = vtkFSLookupTable::SafeDownCast(sourceLut);
-  if (sourceLutFS)
-    {
-    copiedLut = vtkFSLookupTable::New();
-    }
-  else
-    {
-    copiedLut = vtkLookupTable::New();
-    }
-  copiedLut->DeepCopy(sourceLut);
-
-  // Workaround for VTK bug in vtkLookupTable::DeepCopy
-  // (special colors are not copied)
-  copiedLut->BuildSpecialColors();
-
-  return copiedLut;
 }

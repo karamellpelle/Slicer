@@ -259,9 +259,13 @@ void vtkSlicerVolumeRenderingLogic::ChangeVolumeRenderingMethod(const char* disp
   for (displayIt = displayNodesCopy.begin(); displayIt != displayNodesCopy.end(); ++displayIt)
     {
     vtkMRMLVolumeRenderingDisplayNode* oldDisplayNode = vtkMRMLVolumeRenderingDisplayNode::SafeDownCast(*displayIt);
+    if (!oldDisplayNode)
+      {
+      // node may have been deleted
+      continue;
+      }
     vtkSmartPointer<vtkMRMLVolumeRenderingDisplayNode> newDisplayNode =
       vtkSmartPointer<vtkMRMLVolumeRenderingDisplayNode>::Take(this->CreateVolumeRenderingDisplayNode(displayNodeClassName));
-    vtkMRMLDisplayableNode* displayableNode = oldDisplayNode->GetDisplayableNode();
     if (!newDisplayNode)
       {
       vtkErrorMacro("ChangeVolumeRenderingMethod: Failed to create display node of type " << displayNodeClassName);
@@ -269,8 +273,15 @@ void vtkSlicerVolumeRenderingLogic::ChangeVolumeRenderingMethod(const char* disp
       }
     this->GetMRMLScene()->AddNode(newDisplayNode);
     newDisplayNode->vtkMRMLVolumeRenderingDisplayNode::Copy(oldDisplayNode);
+    vtkMRMLDisplayableNode* displayableNode = oldDisplayNode->GetDisplayableNode();
     this->GetMRMLScene()->RemoveNode(oldDisplayNode);
-    displayableNode->AddAndObserveDisplayNodeID(newDisplayNode->GetID());
+    // Assign updated display node to displayable node.
+    // There may be orphan volume rendering display nodes in the scene (without being assigned to a displayable node),
+    // but we leave them alone, as maybe they are just temporarily not used.
+    if (displayableNode)
+      {
+      displayableNode->AddAndObserveDisplayNodeID(newDisplayNode->GetID());
+      }
     }
 
   this->GetMRMLScene()->EndState(vtkMRMLScene::BatchProcessState);
@@ -1092,10 +1103,6 @@ vtkMRMLVolumePropertyNode* vtkSlicerVolumeRenderingLogic::AddVolumePropertyFromF
     localFile = filename;
     }
   const std::string fname(localFile);
-  // the node name is based on the file name (itksys call should work even if
-  // file is not on disk yet)
-  std::string filenameName = itksys::SystemTools::GetFilenameName(fname);
-  const std::string name = itksys::SystemTools::GetFilenameWithoutExtension(filenameName);
 
   // check to see which node can read this type of file
   if (!vpStorageNode->SupportedFileType(fname.c_str()))
@@ -1104,6 +1111,8 @@ vtkMRMLVolumePropertyNode* vtkSlicerVolumeRenderingLogic::AddVolumePropertyFromF
     return nullptr;
     }
 
+  // the node name is based on the file name
+  const std::string name = vpStorageNode->GetFileNameWithoutExtension(fname.c_str());
   std::string uname( this->GetMRMLScene()->GetUniqueNameByString(name.c_str()));
   vpNode->SetName(uname.c_str());
   this->GetMRMLScene()->AddNode(vpNode);
@@ -1159,10 +1168,8 @@ vtkMRMLShaderPropertyNode* vtkSlicerVolumeRenderingLogic::AddShaderPropertyFromF
     localFile = filename;
     }
   const std::string fname(localFile);
-  // the node name is based on the file name (itksys call should work even if
-  // file is not on disk yet)
-  std::string filenameName = itksys::SystemTools::GetFilenameName(fname);
-  const std::string name = itksys::SystemTools::GetFilenameWithoutExtension(filenameName);
+  // the node name is based on the file name
+  const std::string name = spStorageNode->GetFileNameWithoutExtension(fname.c_str());
 
   // check to see which node can read this type of file
   if (spStorageNode->SupportedFileType(fname.c_str()))
@@ -1193,7 +1200,6 @@ vtkMRMLShaderPropertyNode* vtkSlicerVolumeRenderingLogic::AddShaderPropertyFromF
   else
     {
     vtkDebugMacro("Couldn't read file, returning null model node: " << filename);
-    spNode->Delete();
     return nullptr;
     }
 }

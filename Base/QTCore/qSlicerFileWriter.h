@@ -53,10 +53,13 @@ public:
   /// ...
   virtual bool write(const qSlicerIO::IOProperties& properties);
 
-  QStringList writtenNodes()const;
+  /// Return the list of saved nodes from writing the file(s) in write().
+  /// Empty list if write() failed
+  /// \sa setWrittenNodes(), write()
+  virtual QStringList writtenNodes()const;
 
 protected:
-  void setWrittenNodes(const QStringList& nodes);
+  virtual void setWrittenNodes(const QStringList& nodes);
 
 protected:
   QScopedPointer<qSlicerFileWriterPrivate> d_ptr;

@@ -693,7 +693,7 @@ vtkMRMLMarkupsNode* vtkMRMLMarkupsJsonStorageNode::AddNewMarkupsNodeFromFile(con
     delete jsonRoot;
     return nullptr;
     }
-  if (markupIndex >= markups.GetArray().Size())
+  if (markupIndex >= static_cast<int>(markups.GetArray().Size()))
     {
     vtkErrorMacro("vtkMRMLMarkupsStorageNode::AddNewMarkupsNodeFromFile failed: cannot read markup from file " << filePath
       << " requested markup index " << markupIndex << " is not found (number of available markups: " << markups.GetArray().Size());
@@ -710,7 +710,17 @@ vtkMRMLMarkupsNode* vtkMRMLMarkupsJsonStorageNode::AddNewMarkupsNodeFromFile(con
     return nullptr;
     }
   std::string markupsType = markup["type"].GetString();
-  vtkMRMLMarkupsNode* markupsNode = vtkMRMLMarkupsNode::SafeDownCast(scene->AddNewNodeByClass(className.c_str(), nodeName ? nodeName : ""));
+
+  std::string newNodeName;
+  if (nodeName && strlen(nodeName)>0)
+    {
+    newNodeName = nodeName;
+    }
+  else
+    {
+    newNodeName = scene->GetUniqueNameByString(this->GetFileNameWithoutExtension(filePath).c_str());
+    }
+  vtkMRMLMarkupsNode* markupsNode = vtkMRMLMarkupsNode::SafeDownCast(scene->AddNewNodeByClass(className.c_str(), newNodeName));
   if (!markupsNode)
     {
     vtkErrorMacro("vtkMRMLMarkupsStorageNode::ReadDataInternal failed: cannot instantiate class '" << className);
@@ -728,7 +738,7 @@ vtkMRMLMarkupsNode* vtkMRMLMarkupsJsonStorageNode::AddNewMarkupsNodeFromFile(con
     displayNode = vtkMRMLMarkupsDisplayNode::SafeDownCast(markupsNode->GetDisplayNode());
     if (displayNode && markup.HasMember("display"))
       {
-      success == success && this->Internal->UpdateMarkupsDisplayNodeFromJsonValue(displayNode, markup);
+      success = success && this->Internal->UpdateMarkupsDisplayNodeFromJsonValue(displayNode, markup);
       }
     }
 

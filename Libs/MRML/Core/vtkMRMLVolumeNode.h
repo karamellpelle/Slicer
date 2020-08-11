@@ -154,7 +154,9 @@ public:
   /// Get bounding box in slice form (xmin,xmax, ymin,ymax, zmin,zmax).
   /// If not rasToSlice is passed, then it returns the bounds in global RAS form.
   /// \sa GetRASBounds()
-  void GetSliceBounds(double bounds[6], vtkMatrix4x4* rasToSlice);
+  /// If useVoxelCenter is set to false (default) then bounds of voxel sides are returned
+  /// (otherwise then bounds of voxels centers are returned).
+  void GetSliceBounds(double bounds[6], vtkMatrix4x4* rasToSlice, bool useVoxelCenter = false);
 
   ///
   /// Associated display MRML node
@@ -221,6 +223,13 @@ public:
   /// Creates the most appropriate display node class for storing a sequence of these nodes.
   void CreateDefaultSequenceDisplayNodes() override;
 
+  /// Returns true if the volume center is in the origin.
+  bool IsCentered();
+
+  /// Add a transform to the scene that puts the center of the volume in the origin.
+  /// Returns true if the parent transform is changed.
+  bool AddCenteringTransform();
+
 protected:
   vtkMRMLVolumeNode();
   ~vtkMRMLVolumeNode() override;
@@ -246,7 +255,13 @@ protected:
   ///
   /// Return the bounds of the node transformed or not depending on
   /// the useTransform parameter and the rasToSlice transform
-  virtual void GetBoundsInternal(double bounds[6], vtkMatrix4x4* rasToSlice, bool useTransform);
+  /// If useVoxelCenter is set to false (default) then bounds of voxel sides are returned
+  /// (otherwise then bounds of voxels centers are returned).
+  virtual void GetBoundsInternal(double bounds[6], vtkMatrix4x4* rasToSlice, bool useTransform, bool useVoxelCenter = false);
+
+  /// Returns the origin that would put the volume center in the origin.
+  /// If useParentTransform is false then parent transform is ignored.
+  void GetCenterPositionRAS(double* centerPositionRAS, bool useParentTransform=true);
 
   /// these are unit length direction cosines
   double IJKToRASDirections[3][3];

@@ -27,7 +27,7 @@ The following keyboard shortcuts are active when you are in the Editor module.  
 ## Panels and their use
 
 - Segmentation: Choose the segmentation to edit
-- Master volume: Choose the volume to segment. The master volume that is selected the very first time after the segmentation is created is used to determine the segmentation's labelmap representation geometry (resolution, axis directions, origin). The master volume is used by all editor effects that uses intensity of the segmented volume (e.g., thresholding, level tracing). The master volume can be changed at any time during the segmentation process. Note: Currently the only way to change geometry is to create a new segmentation, set its geometry, and then import segments from another segmentation.
+- Master volume: Choose the volume to segment. The master volume that is selected the very first time after the segmentation is created is used to determine the segmentation's labelmap representation geometry (extent, resolution, axis directions, origin). The master volume is used by all editor effects that uses intensity of the segmented volume (e.g., thresholding, level tracing). The master volume can be changed at any time during the segmentation process. Note: changing the master volume does not affect the segmentation's labelmap representation geometry. To make changes to the geometry (make the extent larger, the resolution finer, etc.) click "Specify geometry" button next to the master volume selector, select a "Source geometry" node that will be used as a basis for the new geometry, adjust parameters, and click OK. To specify an arbitrary extens, an ROI (region of interest) node can be created and selected as source geometry.
 - Add segment: Add a new segment to the segmentation and select it.
 - Remove segment: Select the segment you would like to delete then click Remove segment to delete from the segmentation.
 - Create Surface: Display your segmentation in the 3D Viewer. This is a toggle button. When turned on the surface is created and updated automatically as the user is segmenting. When turned off, the conversion is not ongoing so the segmentation process is faster. To change surface creation parameters: go to Segmentations module, click Update button in Closed surface row in Representations section, click Binary labelmap -> Closed surface line, double-click on value column to edit a conversion parameter value. Setting Smoothing factor to 0 disables smoothing, making updates much faster. Set Smoothing factor to 0.1 for weak smoothing and 0.5 or larger for stronger smoothing.
@@ -100,7 +100,10 @@ If Masking / Editable area is set to a specific segment then the highlighted reg
 
 Draw segment inside each anatomical structure. This method will start from these "seeds" and grow them to achieve complete segmentation.
 
-- Initialize: Click this button after initial segmentation is completed (by using other editor effects). Initial computation may take more time than subsequent updates. Master volume, auto-complete method, segmentation extent will be locked after initialization, therefore if any of these have to be changed then click Cancel and initialize again.
+- Initialize: Click this button after initial segmentation is completed (by using other editor effects).
+Initial computation may take more time than subsequent updates.
+Master volume and auto-complete method will be locked after initialization,
+therefore if either of these have to be changed then click Cancel and initialize again.
 - Update: Update completed segmentation based on changed inputs.
 - Auto-update: activate this option to automatically updating result preview when segmentation is changed.
 - Cancel: Remove result preview. Seeds are kept unchanged, so parameters can be changed and segmentation can be restarted by clicking Initialize.
@@ -111,14 +114,16 @@ Notes:
 - Only visible segments are used by this effect.
 - At least two segments are required.
 - If a part of a segment is erased or painting is removed using Undo (and not overwritten by another segment) then it is recommended to cancel and initialize. The reason is that effect of adding more information (painting more seeds) can be propagated to the complete segmentation, but removing information (removing some seed regions) will not change the complete segmentation.
-- Extent of segmentation is limited to the bounding box defined by seed segments. The reason is that this makes computation faster and reduces memory usage for small segments. The extent can be made arbitrarily large by adding seeds at  bondaries of the preferred extent.
 - The method uses grow-cut algorithm: Liangjia Zhu, Ivan Kolesov, Yi Gao, Ron Kikinis, Allen Tannenbaum. An Effective Interactive Medical Image Segmentation Method Using Fast GrowCut, International Conference on Medical Image Computing and Computer Assisted Intervention (MICCAI), Interactive Medical Image Computing Workshop, 2014.
 
 ### ![](https://github.com/Slicer/Slicer/releases/download/docs-resources/module_segmenteditor_fill_between_slices.png) Fill between slices
 
 Create complete segmentation on selected slices using any editor effect. You can skip any number of slices between segmented slices. This method will fill the skipped slices by interpolating between segmented slices.
 
-- Initialize: Click this button after initial segmentation is completed (by using other editor effects). Initial computation may take more time than subsequent updates. Master volume, auto-complete method, segmentation extent will be locked after initialization, therefore if any of these have to be changed then click Cancel and initialize again.
+- Initialize: Click this button after initial segmentation is completed (by using other editor effects).
+Initial computation may take more time than subsequent updates.
+Master volume and auto-complete method will be locked after initialization,
+therefore if either of these have to be changed then click Cancel and initialize again.
 - Update: Update completed segmentation based on changed inputs.
 - Auto-update: activate this option to automatically updating result preview when segmentation is changed.
 - Cancel: Remove result preview. Seeds are kept unchanged, so parameters can be changed and segmentation can be restarted by clicking Initialize.
@@ -199,8 +204,8 @@ Authors:
 This module is partly funded by an Applied Cancer Research Unit of Cancer Care Ontario with funds provided by the Ministry of Health and Long-Term Care and the Ontario Consortium for Adaptive Interventions in Radiation Oncology (OCAIRO) to provide free, open-source toolset for radiotherapy and related image-guided interventions.
 The work is part of the `National Alliance for Medical Image Computing <http://www.na-mic.org/>`_ (NA-MIC), funded by the National Institutes of Health through the NIH Roadmap for Medical Research, Grant U54 EB005149.
 
-![PerkLab, Queen's University](https://github.com/Slicer/Slicer/releases/download/docs-resources/logo_perklab.png)
-![Isomics](https://github.com/Slicer/Slicer/releases/download/docs-resources/logo_isomics.png)
-![National Alliance in Medical Image Computing (NA-MIC)](https://github.com/Slicer/Slicer/releases/download/docs-resources/logo_namic.png)
-![NAC](https://github.com/Slicer/Slicer/releases/download/docs-resources/logo_nac.png)
-![General Electric](https://github.com/Slicer/Slicer/releases/download/docs-resources/logo_ge.png)
+![](https://github.com/Slicer/Slicer/releases/download/docs-resources/logo_perklab.png)
+![](https://github.com/Slicer/Slicer/releases/download/docs-resources/logo_isomics.png)
+![](https://github.com/Slicer/Slicer/releases/download/docs-resources/logo_namic.png)
+![](https://github.com/Slicer/Slicer/releases/download/docs-resources/logo_nac.png)
+![](https://github.com/Slicer/Slicer/releases/download/docs-resources/logo_ge.png)

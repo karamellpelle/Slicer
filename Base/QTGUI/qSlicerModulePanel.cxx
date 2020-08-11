@@ -179,6 +179,7 @@ void qSlicerModulePanel::addModule(qSlicerAbstractCoreModule* module)
       }
     help = qSlicerUtils::replaceWikiUrlVersion(module->helpText(), wikiVersion);
     }
+  help.replace("\\n", "<br>");
 
   d->HelpCollapsibleButton->setVisible(this->isHelpAndAcknowledgmentVisible() && !help.isEmpty());
   d->HelpLabel->setHtml(help);
@@ -197,7 +198,6 @@ void qSlicerModulePanel::addModule(qSlicerAbstractCoreModule* module)
   if (!module->contributors().isEmpty())
     {
     QString contributors = module->contributors().join(", ");
-    contributors.replace(contributors.lastIndexOf(","), 1, " and");
     QString contributorsText = QString("<br/><u>Contributors:</u> <i>") + contributors + "</i><br/>";
     d->AcknowledgementLabel->append(contributorsText);
     }

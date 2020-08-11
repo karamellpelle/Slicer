@@ -44,10 +44,6 @@ if((NOT DEFINED VTK_DIR OR NOT DEFINED VTK_SOURCE_DIR) AND NOT Slicer_USE_SYSTEM
       -DPYTHON_EXECUTABLE:PATH=${PYTHON_EXECUTABLE}
       -DPYTHON_INCLUDE_DIR:PATH=${PYTHON_INCLUDE_DIR}
       -DPYTHON_LIBRARY:FILEPATH=${PYTHON_LIBRARY}
-      # We use release-mode Python for debug-mode application builds.
-      # Leaving PYTHON_DEBUG_LIBRARY undefined could result in using
-      # a random debug-mode Python library found somewhere on the system.
-      -DPYTHON_DEBUG_LIBRARY:FILEPATH=${PYTHON_LIBRARY}
       )
   endif()
 
@@ -126,7 +122,7 @@ if((NOT DEFINED VTK_DIR OR NOT DEFINED VTK_SOURCE_DIR) AND NOT Slicer_USE_SYSTEM
 
 set(_git_tag)
 if("${Slicer_VTK_VERSION_MAJOR}" STREQUAL "8")
-  set(_git_tag "a843afe3ac8987d76444e0b4aa6632301ee1b303") # slicer-v8.2.0-2018-10-02-74d9488523
+  set(_git_tag "9c813fe590b5f604dbd7f6641021308a21b3cea1") # slicer-v8.2.0-2018-10-02-74d9488523
 else()
   message(FATAL_ERROR "error: Unsupported Slicer_VTK_VERSION_MAJOR: ${Slicer_VTK_VERSION_MAJOR}")
 endif()

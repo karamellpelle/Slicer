@@ -33,7 +33,7 @@ This module allows importing, loading, and exporting DICOM files, and sending re
 """
     self.parent.helpText += self.getDefaultModuleDocumentationLink()
     self.parent.acknowledgementText = """
-This work is supported by NA-MIC, NAC, BIRN, NCIGT, and the Slicer Community. See <a href=http://www.slicer.org>http://www.slicer.org</a> for details.  Module implemented by Steve Pieper.  Based on work from CommonTK (http://www.commontk.org).
+This work is supported by NA-MIC, NAC, BIRN, NCIGT, and the Slicer Community.
 """
     self.parent.icon = qt.QIcon(':Icons/Medium/SlicerLoadDICOM.png')
     self.parent.dependencies = ["SubjectHierarchy"]
@@ -339,17 +339,6 @@ class DICOMSettingsPanel(ctk.ctkSettingsPanel):
   def __init__(self, *args, **kwargs):
     ctk.ctkSettingsPanel.__init__(self, *args, **kwargs)
     self.ui = _ui_DICOMSettingsPanel(self)
-
-
-
-#
-# Class for avoiding python error that is caused by the method DICOM::setup
-# http://www.na-mic.org/Bug/view.php?id=3871
-#
-class DICOMFileWriter(object):
-  def __init__(self, parent):
-    pass
-
 
 
 #

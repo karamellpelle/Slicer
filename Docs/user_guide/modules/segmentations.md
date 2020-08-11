@@ -54,7 +54,7 @@ Tip: Selection of a `master volume` is required for editing a segmentation. If n
 
 ### Export segmentation to model (surface mesh) file
 
-Direct file export is available for STL and OBJ files:
+Segments can be exported to STL or OBJ files for 3D printing or visualization/processing in external software:
 
 - Open `Export to files` section in `Segmentations` module (or in `Segment editor` module: choose `Export to files`, in the drop-down menu of `Segmentations` button)
 - Choose destination folder, file format, etc.
@@ -164,8 +164,8 @@ Authors:
 
 This work is funded in part by An Applied Cancer Research Unit of Cancer Care Ontario with funds provided by the Ministry of Health and Long-Term Care and the Ontario Consortium for Adaptive Interventions in Radiation Oncology (OCAIRO) to provide free, open-source toolset for radiotherapy and related image-guided interventions.
 
-![PerkLab, Queen's University](https://github.com/Slicer/Slicer/releases/download/docs-resources/logo_perklab.png)
-![Cancer Care Ontario (CCO)](https://github.com/Slicer/Slicer/releases/download/docs-resources/logo_cco.png)
-![National Alliance in Medical Image Computing (NA-MIC)](https://github.com/Slicer/Slicer/releases/download/docs-resources/logo_namic.png)
-![Ontario Consortion for Adaptive Interventions in Radiation Oncology (OCAIRO)](https://github.com/Slicer/Slicer/releases/download/docs-resources/logo_ocairo.png)
-![Isomics](https://github.com/Slicer/Slicer/releases/download/docs-resources/logo_isomics.png)
+![](https://github.com/Slicer/Slicer/releases/download/docs-resources/logo_perklab.png)
+![](https://github.com/Slicer/Slicer/releases/download/docs-resources/logo_cco.png)
+![](https://github.com/Slicer/Slicer/releases/download/docs-resources/logo_namic.png)
+![](https://github.com/Slicer/Slicer/releases/download/docs-resources/logo_ocairo.png)
+![](https://github.com/Slicer/Slicer/releases/download/docs-resources/logo_isomics.png)

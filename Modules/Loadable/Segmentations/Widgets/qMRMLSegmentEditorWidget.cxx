@@ -297,6 +297,9 @@ public:
 
   QAction* SurfaceSmoothingEnabledAction;
   ctkSliderWidget* SurfaceSmoothingSlider;
+
+  QString DefaultTerminologyEntrySettingsKey;
+  QString DefaultTerminologyEntry;
 };
 
 //-----------------------------------------------------------------------------
@@ -335,6 +338,7 @@ qMRMLSegmentEditorWidgetPrivate::qMRMLSegmentEditorWidgetPrivate(qMRMLSegmentEdi
     // Global splitting, merging
     << "Scissors" << "Islands" << "Logical operators";
   this->UnorderedEffectsVisible = true;
+  this->DefaultTerminologyEntrySettingsKey = "Segmentations/DefaultTerminologyEntry";
 }
 
 //-----------------------------------------------------------------------------
@@ -2116,8 +2120,7 @@ void qMRMLSegmentEditorWidget::onAddSegment()
   vtkSegment* addedSegment = segmentationNode->GetSegmentation()->GetSegment(addedSegmentID);
   if (addedSegment)
     {
-    QSettings settings;
-    QString defaultTerminologyEntryStr = settings.value("Segmentations/DefaultTerminologyEntry").toString();
+    QString defaultTerminologyEntryStr = this->defaultTerminologyEntry();
     if (!defaultTerminologyEntryStr.isEmpty())
       {
       addedSegment->SetTag(vtkSegment::GetTerminologyEntryTagName(), defaultTerminologyEntryStr.toUtf8().constData());
@@ -3078,6 +3081,11 @@ void qMRMLSegmentEditorWidget::toggleMasterVolumeIntensityMaskEnabled()
 void qMRMLSegmentEditorWidget::undo()
 {
   Q_D(qMRMLSegmentEditorWidget);
+  if (!d->SegmentationNode)
+    {
+    return;
+    }
+
   MRMLNodeModifyBlocker blocker(d->SegmentationNode);
   d->SegmentationHistory->RestorePreviousState();
   d->SegmentationNode->InvokeCustomModifiedEvent(vtkMRMLDisplayableNode::DisplayModifiedEvent, d->SegmentationNode->GetDisplayNode());
@@ -3087,6 +3095,11 @@ void qMRMLSegmentEditorWidget::undo()
 void qMRMLSegmentEditorWidget::redo()
 {
   Q_D(qMRMLSegmentEditorWidget);
+  if (!d->SegmentationNode)
+    {
+    return;
+    }
+
   MRMLNodeModifyBlocker blocker(d->SegmentationNode);
   d->SegmentationHistory->RestoreNextState();
   d->SegmentationNode->InvokeCustomModifiedEvent(vtkMRMLDisplayableNode::DisplayModifiedEvent, d->SegmentationNode->GetDisplayNode());
@@ -3554,6 +3567,7 @@ void qMRMLSegmentEditorWidget::onExportToFilesActionClicked()
   // Create file export widget to allow user editing conversion details
 
   qMRMLSegmentationFileExportWidget* exportToFileWidget = new qMRMLSegmentationFileExportWidget(exportDialog);
+  exportToFileWidget->setMRMLScene(this->mrmlScene());
   exportToFileWidget->setSegmentationNode(d->SegmentationNode);
   exportToFileWidget->setSettingsKey("ExportSegmentsToFiles");
   layout->addWidget(exportToFileWidget);
@@ -3837,4 +3851,66 @@ void qMRMLSegmentEditorWidget::selectSegmentAtOffset (int offset)
       }
     }
   this->setCurrentSegmentID(selectedSegmentID.toStdString().c_str());
+}
+
+//---------------------------------------------------------------------------
+QString qMRMLSegmentEditorWidget::defaultTerminologyEntry()
+{
+  Q_D(qMRMLSegmentEditorWidget);
+  if (d->DefaultTerminologyEntrySettingsKey.isEmpty())
+    {
+    return d->DefaultTerminologyEntry;
+    }
+  else
+    {
+    QSettings settings;
+    return d->DefaultTerminologyEntry = settings.value(d->DefaultTerminologyEntrySettingsKey, d->DefaultTerminologyEntry).toString();
+    }
+}
+
+//---------------------------------------------------------------------------
+void qMRMLSegmentEditorWidget::setDefaultTerminologyEntry(const QString& terminologyEntry)
+{
+  Q_D(qMRMLSegmentEditorWidget);
+  d->DefaultTerminologyEntry = terminologyEntry;
+  if (!d->DefaultTerminologyEntrySettingsKey.isEmpty())
+    {
+    QSettings settings;
+    settings.setValue(d->DefaultTerminologyEntrySettingsKey, d->DefaultTerminologyEntry);
+    }
+}
+
+//---------------------------------------------------------------------------
+QString qMRMLSegmentEditorWidget::defaultTerminologyEntrySettingsKey() const
+{
+  Q_D(const qMRMLSegmentEditorWidget);
+  return d->DefaultTerminologyEntrySettingsKey;
+}
+
+//---------------------------------------------------------------------------
+void qMRMLSegmentEditorWidget::setDefaultTerminologyEntrySettingsKey(const QString& terminologyEntrySettingsKey)
+{
+  Q_D(qMRMLSegmentEditorWidget);
+  d->DefaultTerminologyEntrySettingsKey = terminologyEntrySettingsKey;
+}
+
+// --------------------------------------------------------------------------
+void qMRMLSegmentEditorWidget::jumpSlices()
+{
+  Q_D(qMRMLSegmentEditorWidget);
+  d->SegmentsTableView->jumpSlices();
+}
+
+// --------------------------------------------------------------------------
+void qMRMLSegmentEditorWidget::setJumpToSelectedSegmentEnabled(bool enable)
+{
+  Q_D(qMRMLSegmentEditorWidget);
+  d->SegmentsTableView->setJumpToSelectedSegmentEnabled(enable);
+}
+
+// --------------------------------------------------------------------------
+bool qMRMLSegmentEditorWidget::jumpToSelectedSegmentEnabled()const
+{
+  Q_D(const qMRMLSegmentEditorWidget);
+  return d->SegmentsTableView->jumpToSelectedSegmentEnabled();
 }

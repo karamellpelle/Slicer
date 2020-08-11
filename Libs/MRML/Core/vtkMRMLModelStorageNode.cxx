@@ -19,6 +19,7 @@
 
 // VTK includes
 #include <vtkActor.h>
+#include <vtkAVSucdReader.h>
 #include <vtkBYUReader.h>
 #include <vtkCellArray.h>
 #include <vtkDataSetSurfaceFilter.h>
@@ -41,6 +42,7 @@
 #include <vtksys/SystemTools.hxx>
 #include <vtkTransform.h>
 #include <vtkTransformFilter.h>
+#include <vtkTransformPolyDataFilter.h>
 #include <vtkTriangleFilter.h>
 #include <vtkUnstructuredGrid.h>
 #include <vtkUnstructuredGridReader.h>
@@ -244,6 +246,13 @@ int vtkMRMLModelStorageNode::ReadDataInternal(vtkMRMLNode *refNode)
       reader->Update();
       meshFromFile = reader->GetOutput();
       coordinateSystemInFileHeader = vtkMRMLModelStorageNode::GetCoordinateSystemFromFieldData(meshFromFile);
+      }
+    else if (extension == std::string(".ucd"))
+      {
+      vtkNew<vtkAVSucdReader> reader;
+      reader->SetFileName(fullName.c_str());
+      reader->Update();
+      meshFromFile = reader->GetOutput();
       }
     else if (extension == std::string(".vtu"))
       {
@@ -653,6 +662,7 @@ void vtkMRMLModelStorageNode::InitializeSupportedReadFileTypes()
   this->SupportedReadFileTypes->InsertNextValue("vtkXMLPolyDataReader (.meta)");
   this->SupportedReadFileTypes->InsertNextValue("STL (.stl)");
   this->SupportedReadFileTypes->InsertNextValue("PLY (.ply)");
+  this->SupportedReadFileTypes->InsertNextValue("UCD (.ucd)");
   this->SupportedReadFileTypes->InsertNextValue("Wavefront OBJ (.obj)");
 }
 
@@ -710,12 +720,25 @@ void vtkMRMLModelStorageNode::ConvertBetweenRASAndLPS(vtkPointSet* inputMesh, vt
 {
   vtkNew<vtkTransform> transformRasLps;
   transformRasLps->Scale(-1, -1, 1);
-  vtkNew<vtkTransformFilter> transformFilter;
-  transformFilter->SetTransform(transformRasLps);
-  transformFilter->SetInputData(inputMesh);
-  transformFilter->TransformAllInputVectorsOn();
-  transformFilter->Update();
-  outputMesh->ShallowCopy(transformFilter->GetOutput());
+  // vtkTransformPolyDataFilter preserves texture coordinates, while vtkTransformFilter removes them,
+  // therefore we must use vtkTransformPolyDataFilter for surface meshes.
+  if (inputMesh->IsA("vtkPolyData"))
+    {
+    vtkNew<vtkTransformPolyDataFilter> transformFilter;
+    transformFilter->SetTransform(transformRasLps);
+    transformFilter->SetInputData(inputMesh);
+    transformFilter->Update();
+    outputMesh->ShallowCopy(transformFilter->GetOutput());
+    }
+  else
+    {
+    vtkNew<vtkTransformFilter> transformFilter;
+    transformFilter->SetTransform(transformRasLps);
+    transformFilter->SetInputData(inputMesh);
+    transformFilter->TransformAllInputVectorsOn();
+    transformFilter->Update();
+    outputMesh->ShallowCopy(transformFilter->GetOutput());
+    }
 }
 
 //----------------------------------------------------------------------------

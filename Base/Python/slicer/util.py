@@ -334,7 +334,7 @@ def childWidgetVariables(widget):
   return ui
 
 def setSliceViewerLayers(background='keep-current', foreground='keep-current', label='keep-current',
-                         foregroundOpacity=None, labelOpacity=None, fit=False):
+                         foregroundOpacity=None, labelOpacity=None, fit=False, rotateToVolumePlane=False):
   """ Set the slice views with the given nodes.
 
   If node ID is not specified (or value is 'keep-current') then the layer will not be modified.
@@ -344,6 +344,7 @@ def setSliceViewerLayers(background='keep-current', foreground='keep-current', l
   :param label: node or node ID to be used for the label layer
   :param foregroundOpacity: opacity of the foreground layer
   :param labelOpacity: opacity of the label layer
+  :param rotateToVolumePlane: rotate views to closest axis of the selected background, foreground, or label volume
   :param fit: fit slice views to their content (position&zoom to show all visible layers)
   """
   import slicer
@@ -367,6 +368,20 @@ def setSliceViewerLayers(background='keep-current', foreground='keep-current', l
       if labelOpacity is not None:
           sliceViewer.SetLabelOpacity(labelOpacity)
 
+  if rotateToVolumePlane:
+    if background != 'keep-current':
+      volumeNode = slicer.mrmlScene.GetNodeByID(_nodeID(background))
+    elif foreground != 'keep-current':
+      volumeNode = slicer.mrmlScene.GetNodeByID(_nodeID(foreground))
+    elif label != 'keep-current':
+      volumeNode = slicer.mrmlScene.GetNodeByID(_nodeID(label))
+    else:
+      volumeNode = None
+    if volumeNode:
+      layoutManager = slicer.app.layoutManager()
+      for sliceViewName in layoutManager.sliceViewNames():
+        layoutManager.sliceWidget(sliceViewName).mrmlSliceNode().RotateToVolumePlane(volumeNode)
+
   if fit:
     layoutManager = slicer.app.layoutManager()
     if layoutManager is not None:
@@ -375,6 +390,68 @@ def setSliceViewerLayers(background='keep-current', foreground='keep-current', l
         sliceLogic = sliceLogics.GetItemAsObject(i)
         if sliceLogic:
           sliceLogic.FitSliceToAll()
+
+def setToolbarsVisible(visible, ignore=None):
+  """Show/hide all existing toolbars, except those listed in
+  ignore list.
+  """
+
+  for toolbar in mainWindow().findChildren('QToolBar'):
+    if ignore is not None and toolbar in ignore:
+      continue
+    toolbar.setVisible(visible)
+
+  # Prevent sequence browser toolbar showing up automatically
+  # when a sequence is loaded.
+  # (put in try block because Sequence Browser module is not always installed)
+  try:
+    import slicer
+    slicer.modules.sequences.autoShowToolBar = visible
+  except:
+    # Sequences module is not installed
+    pass
+
+def setMenuBarsVisible(visible, ignore=None):
+  """Show/hide all menu bars, except those listed in
+  ignore list."""
+  for menubar in mainWindow().findChildren('QMenuBar'):
+    if ignore is not None and menubar in ignore:
+      continue
+    menubar.setVisible(visible)
+
+def setPythonConsoleVisible(visible):
+  """Show/hide Python console."""
+  mainWindow().pythonConsole().parent().setVisible(visible)
+
+def setStatusBarVisible(visible):
+  """Show/hide status bar"""
+  mainWindow(verbose=False).statusBar().setVisible(visible)
+
+def setViewControllersVisible(visible):
+  """Show/hide view controller toolbar at the top of slice and 3D views"""
+  import slicer
+  lm = slicer.app.layoutManager()
+  for viewIndex in range(lm.threeDViewCount):
+    lm.threeDWidget(viewIndex).threeDController().setVisible(visible)
+  for sliceViewName in lm.sliceViewNames():
+    lm.sliceWidget(sliceViewName).sliceController().setVisible(visible)
+  for viewIndex in range(lm.tableViewCount):
+    lm.tableWidget(viewIndex).tableController().setVisible(visible)
+  for viewIndex in range(lm.plotViewCount):
+    lm.plotWidget(viewIndex).plotController().setVisible(visible)
+
+def forceRenderAllViews():
+  """Force rendering of all views"""
+  import slicer
+  lm = slicer.app.layoutManager()
+  for viewIndex in range(lm.threeDViewCount):
+    lm.threeDWidget(viewIndex).threeDView().forceRender()
+  for sliceViewName in lm.sliceViewNames():
+    lm.sliceWidget(sliceViewName).sliceView().forceRender()
+  for viewIndex in range(lm.tableViewCount):
+    lm.tableWidget(viewIndex).tableView().repaint()
+  for viewIndex in range(lm.plotViewCount):
+    lm.plotWidget(viewIndex).plotView().repaint()
 
 #
 # IO
@@ -843,6 +920,32 @@ def reloadScriptedModule(moduleName):
 
   return reloaded_module
 
+def setModulePanelTitleVisible(visible):
+  """Show/hide module panel title bar at the top of module panel.
+  If the title bar is not visible then it is not possible to drag and dock the
+  module panel to a different location."""
+  modulePanelDockWidget = mainWindow().findChildren('QDockWidget','PanelDockWidget')[0]
+  if visible:
+    modulePanelDockWidget.setTitleBarWidget(None)
+  else:
+    import qt
+    modulePanelDockWidget.setTitleBarWidget(qt.QWidget(modulePanelDockWidget))
+
+def setApplicationLogoVisible(visible):
+  """Show/hide application logo at the top of module panel."""
+  widget = findChild(mainWindow(), "LogoLabel")
+  widget.setVisible(visible)
+
+def setModuleHelpSectionVisible(visible):
+  """Show/hide Help section at the top of module panel."""
+  modulePanel = findChild(mainWindow(), "ModulePanel")
+  modulePanel.helpAndAcknowledgmentVisible = visible
+
+def setDataProbeVisible(visible):
+  """Show/hide Data probe at the bottom of module panel."""
+  widget = findChild(mainWindow(), "DataProbeCollapsibleWidget")
+  widget.setVisible(visible)
+
 #
 # Layout
 #
@@ -962,7 +1065,7 @@ def array(pattern = "", index = 0):
   MRML node that matches the pattern.
 
   .. warning::
-  
+
     Meant to be used in the python console for quick debugging/testing.
 
   More specific API should be used in scripts to be sure you get exactly
@@ -1799,7 +1902,7 @@ def createProgressDialog(parent=None, value=0, maximum=100, labelText="", window
 
   Go to `QProgressDialog documentation <http://pyqt.sourceforge.net/Docs/PyQt4/qprogressdialog.html>`_ to
   learn about the available keyword arguments.
-  
+
   Examples::
 
     # Prevent progress dialog from automatically closing
@@ -1867,7 +1970,7 @@ def clickAndDrag(widget,button='Left',start=(10,10),end=(10,40),steps=20,modifie
   :param modifiers: list containing zero or more of "Shift" or "Control"
 
   .. hint::
-  
+
     For generating test data you can use this snippet of code::
 
       layoutManager = slicer.app.layoutManager()
@@ -2288,28 +2391,10 @@ def logProcessOutput(proc):
   if retcode != 0:
     raise CalledProcessError(retcode, proc.args, output=proc.stdout, stderr=proc.stderr)
 
-def pip_install(req):
-  """Install python packages.
-  Currently, the method simply calls ``python -m pip install`` but in the future further checks, optimizations,
-  user confirmation may be implemented, therefore it is recommended over to use this method call instead of a plain
-  pip install.
-  :param req: requirement specifier, same format as used by pip (https://docs.python.org/3/installing/index.html)
-
-  Example: calling from Slicer GUI
-
-  .. code-block:: python
-
-    pip_install("tensorflow keras scikit-learn ipywidgets")
-
-  Example: calling from PythonSlicer console
-
-  .. code-block:: python
-
-    from slicer.util import pip_install
-    pip_install("tensorflow")
-
+def _executePythonModule(module, args):
+  """Execute a Python module as a script in Slicer's Python environment.
+  Internally python -m is called with the module name and additional arguments.
   """
-
   # Determine pythonSlicerExecutablePath
   try:
     from slicer import app
@@ -2330,95 +2415,81 @@ def pip_install(req):
     if os.name == 'nt':
       pythonSlicerExecutablePath += ".exe"
 
-  command_line = [pythonSlicerExecutablePath, "-m", "pip", "install"]
-  command_line.extend(req.split(" "))
-  proc=launchConsoleProcess(command_line, useStartupEnvironment = False)
+  commandLine = [pythonSlicerExecutablePath, "-m", module, *args]
+  proc = launchConsoleProcess(commandLine, useStartupEnvironment=False)
   logProcessOutput(proc)
 
-def setToolbarsVisible(visible, ignore=None):
-  """Show/hide all existing toolbars, except those listed in
-  ignore list.
+def pip_install(requirements):
+  """Install python packages.
+  Currently, the method simply calls ``python -m pip install`` but in the future further checks, optimizations,
+  user confirmation may be implemented, therefore it is recommended to use this method call instead of a plain
+  pip install.
+  :param requirements: requirement specifier, same format as used by pip (https://docs.python.org/3/installing/index.html)
+
+  Example: calling from Slicer GUI
+
+  .. code-block:: python
+
+    pip_install("tensorflow keras scikit-learn ipywidgets")
+
+  Example: calling from PythonSlicer console
+
+  .. code-block:: python
+
+    from slicer.util import pip_install
+    pip_install("tensorflow")
+
   """
+  args = 'install', *requirements.split()
+  _executePythonModule('pip', args)
 
-  for toolbar in mainWindow().findChildren('QToolBar'):
-    if ignore is not None and toolbar in ignore:
-      continue
-    toolbar.setVisible(visible)
+def pip_uninstall(requirements):
+  """Uninstall python packages.
+  Currently, the method simply calls ``python -m pip uninstall`` but in the future further checks, optimizations,
+  user confirmation may be implemented, therefore it is recommended to use this method call instead of a plain
+  pip uninstall.
+  :param requirements: requirement specifier, same format as used by pip (https://docs.python.org/3/installing/index.html)
 
-  # Prevent sequence browser toolbar showing up automatically
-  # when a sequence is loaded.
-  # (put in try block because Sequence Browser module is not always installed)
-  try:
-    import slicer
-    slicer.modules.sequences.autoShowToolBar = visible
-  except:
-    # Sequences module is not installed
-    pass
+  Example: calling from Slicer GUI
 
-def setMenuBarsVisible(visible, ignore=None):
-  """Show/hide all menu bars, except those listed in
-  ignore list."""
-  for menubar in mainWindow().findChildren('QMenuBar'):
-    if ignore is not None and menubar in ignore:
-      continue
-    menubar.setVisible(visible)
+  .. code-block:: python
 
-def setPythonConsoleVisible(visible):
-  """Show/hide Python console."""
-  mainWindow().pythonConsole().parent().setVisible(visible)
+    pip_uninstall("tensorflow keras scikit-learn ipywidgets")
 
-def setStatusBarVisible(visible):
-  """Show/hide status bar"""
-  mainWindow(verbose=False).statusBar().setVisible(visible)
+  Example: calling from PythonSlicer console
 
-def setViewControllersVisible(visible):
-  """Show/hide view controller toolbar at the top of slice and 3D views"""
-  import slicer
-  lm = slicer.app.layoutManager()
-  for viewIndex in range(lm.threeDViewCount):
-    lm.threeDWidget(viewIndex).threeDController().setVisible(visible)
-  for sliceViewName in lm.sliceViewNames():
-    lm.sliceWidget(sliceViewName).sliceController().setVisible(visible)
-  for viewIndex in range(lm.tableViewCount):
-    lm.tableWidget(viewIndex).tableController().setVisible(visible)
-  for viewIndex in range(lm.plotViewCount):
-    lm.plotWidget(viewIndex).plotController().setVisible(visible)
+  .. code-block:: python
 
-def forceRenderAllViews():
-  """Force rendering of all views"""
-  import slicer
-  lm = slicer.app.layoutManager()
-  for viewIndex in range(lm.threeDViewCount):
-    lm.threeDWidget(viewIndex).threeDView().forceRender()
-  for sliceViewName in lm.sliceViewNames():
-    lm.sliceWidget(sliceViewName).sliceView().forceRender()
-  for viewIndex in range(lm.tableViewCount):
-    lm.tableWidget(viewIndex).tableView().repaint()
-  for viewIndex in range(lm.plotViewCount):
-    lm.plotWidget(viewIndex).plotView().repaint()
+    from slicer.util import pip_uninstall
+    pip_uninstall("tensorflow")
 
-def setModulePanelTitleVisible(visible):
-  """Show/hide module panel title bar at the top of module panel.
-  If the title bar is not visible then it is not possible to drag and dock the
-  module panel to a different location."""
-  modulePanelDockWidget = mainWindow().findChildren('QDockWidget','PanelDockWidget')[0]
-  if visible:
-    modulePanelDockWidget.setTitleBarWidget(None)
-  else:
-    import qt
-    modulePanelDockWidget.setTitleBarWidget(qt.QWidget(modulePanelDockWidget))
+  """
+  args = 'uninstall', *requirements.split(), '--yes'
+  _executePythonModule('pip', args)
 
-def setApplicationLogoVisible(visible):
-  """Show/hide application logo at the top of module panel."""
-  widget = findChild(mainWindow(), "LogoLabel")
-  widget.setVisible(visible)
+def longPath(path):
+  """
+  Make long paths work on Windows, where the maximum path length is 260 characters.
+  For example, the files in the DICOM database may have paths longer than this limit.
+  Accessing these can be made safe by prefixing it with the UNC prefix ('\\?\').
 
-def setModuleHelpSectionVisible(visible):
-  """Show/hide Help section at the top of module panel."""
-  modulePanel = findChild(mainWindow(), "ModulePanel")
-  modulePanel.helpAndAcknowledgmentVisible = visible
+  :param string path: Path to be made safe if too long
 
-def setDataProbeVisible(visible):
-  """Show/hide Data probe at the bottom of module panel."""
-  widget = findChild(mainWindow(), "DataProbeCollapsibleWidget")
-  widget.setVisible(visible)
+  :return string: Safe path
+  """
+  # Return path as is if conversion is disabled
+  longPathConversionEnabled = settingsValue('General/LongPathConversionEnabled', True, converter=toBool)
+  if not longPathConversionEnabled:
+    return path
+  # Return path as is on operating systems other than Windows
+  import qt
+  sysInfo = qt.QSysInfo()
+  if sysInfo.productType() != 'windows':
+    return path
+  # Skip prefixing relative paths as UNC prefix wors only on absolute paths
+  if not qt.QDir.isAbsolutePath(path):
+    return path
+  # Return path as is if UNC prefix is already applied
+  if path[:4] == '\\\\?\\':
+    return path
+  return u"\\\\?\\" + path.replace('/', '\\')

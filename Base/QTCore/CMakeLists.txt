@@ -54,7 +54,6 @@ set(KIT_export_directive "Q_SLICER_BASE_QTCORE_EXPORT")
 set(KIT_include_directories
   ${MRMLLogic_INCLUDE_DIRS}
   ${MRMLDisplayableManager_INCLUDE_DIRS}
-  ${FreeSurfer_INCLUDE_DIRS} # for qSlicerXcedeCatalogReader
   )
 
 if(Slicer_BUILD_CLI_SUPPORT)
@@ -104,8 +103,6 @@ set(KIT_SRCS
   qSlicerSlicer2SceneReader.h
   qSlicerUtils.cxx
   qSlicerUtils.h
-  qSlicerXcedeCatalogReader.cxx
-  qSlicerXcedeCatalogReader.h
   )
 
 if(Slicer_BUILD_EXTENSIONMANAGER_SUPPORT)
@@ -119,6 +116,8 @@ endif()
 
 if(Slicer_USE_PYTHONQT)
   list(APPEND KIT_SRCS
+    qSlicerScriptedFileReader.cxx
+    qSlicerScriptedFileReader.h
     qSlicerScriptedFileWriter.cxx
     qSlicerScriptedFileWriter.h
     qSlicerScriptedUtils.cxx
@@ -148,7 +147,6 @@ set(KIT_MOC_SRCS
   qSlicerModuleManager.h
   qSlicerSceneBundleReader.h
   qSlicerSlicer2SceneReader.h
-  qSlicerXcedeCatalogReader.h
   )
 
 if(Slicer_BUILD_EXTENSIONMANAGER_SUPPORT)
@@ -160,6 +158,7 @@ endif()
 
 if(Slicer_USE_PYTHONQT)
   list(APPEND KIT_MOC_SRCS
+    qSlicerScriptedFileReader.h
     qSlicerScriptedFileWriter.h
     )
 endif()

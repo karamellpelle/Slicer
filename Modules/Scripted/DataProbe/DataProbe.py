@@ -19,13 +19,11 @@ class DataProbe(ScriptedLoadableModule):
     parent.title = "DataProbe"
     parent.categories = ["Quantification"]
     parent.contributors = ["Steve Pieper (Isomics)"]
-    parent.helpText = string.Template("""
-The DataProbe module is used to get information about the current RAS position being indicated by the mouse position.  See <a href=\"$a/Documentation/$b.$c/Modules/DataProbe\">$a/Documentation/$b.$c/Modules/DataProbe</a> for more information.
-    """).substitute({ 'a':parent.slicerWikiUrl, 'b':slicer.app.majorVersion, 'c':slicer.app.minorVersion })
-    parent.acknowledgementText = """
-This work is supported by NA-MIC, NAC, NCIGT, NIH U24 CA180918 (PIs Kikinis and Fedorov) and the Slicer Community.
-See <a>http://www.slicer.org</a> for details.  Module implemented by Steve Pieper.
-    """
+    parent.helpText = string.Template("""The DataProbe module is used to get information about the current RAS position being
+indicated by the mouse position. For more information see the
+<a href=\"$a/Documentation/$b.$c/Modules/DataProbe\">online documentation</a>.
+""").substitute({ 'a':parent.slicerWikiUrl, 'b':slicer.app.majorVersion, 'c':slicer.app.minorVersion })
+    parent.acknowledgementText = """This work is supported by NA-MIC, NAC, NCIGT, NIH U24 CA180918 (PIs Kikinis and Fedorov) and the Slicer Community."""
     # TODO: need a DataProbe icon
     #parent.icon = qt.QIcon(':Icons/XLarge/SlicerDownloadMRHead.png')
     self.infoWidget = None
@@ -252,8 +250,11 @@ class DataProbeInfoWidget(object):
     # collect information from displayable managers
     displayableManagerCollection = vtk.vtkCollection()
     if sliceNode:
-      sliceView = slicer.app.layoutManager().sliceWidget(sliceNode.GetName()).sliceView()
-      sliceView.getDisplayableManagers(displayableManagerCollection)
+      sliceWidget = slicer.app.layoutManager().sliceWidget(sliceNode.GetName())
+      if sliceWidget:
+        # sliceWidget is owned by the layout manager
+        sliceView = sliceWidget.sliceView()
+        sliceView.getDisplayableManagers(displayableManagerCollection)
     aggregatedDisplayableManagerInfo = ''
     for index in range(displayableManagerCollection.GetNumberOfItems()):
       displayableManager = displayableManagerCollection.GetItemAsObject(index)
@@ -417,7 +418,9 @@ class DataProbeInfoWidget(object):
 
     self.viewerFrame.layout().addStretch(1)
 
-    def _setFixedFontFamily(widget, family='Monospace'):
+    def _setFixedFontFamily(widget, family=None):
+      if family is None:
+        family = qt.QFontDatabase.systemFont(qt.QFontDatabase.FixedFont).family()
       font = widget.font
       font.setFamily(family)
       widget.font = font

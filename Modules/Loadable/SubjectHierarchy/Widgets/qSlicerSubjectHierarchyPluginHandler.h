@@ -35,8 +35,9 @@
 #include <vtkWeakPointer.h>
 
 // Qt includes
-#include <QObject>
+#include <QDateTime>
 #include <QList>
+#include <QObject>
 #include <QString>
 
 class vtkMRMLScene;
@@ -119,6 +120,7 @@ public:
   /// IMPORTANT NOTE: This function is solely used for plugin-provided context menus. This is NOT to be used for getting the
   ///                 selected items of individual widgets (tree views, comboboxes).
   Q_INVOKABLE QList<vtkIdType> currentItems();
+  Q_INVOKABLE void currentItems(vtkIdList* selectedItems);
 
   Q_INVOKABLE bool autoDeleteSubjectHierarchyChildren()const;
   Q_INVOKABLE void setAutoDeleteSubjectHierarchyChildren(bool flag);
@@ -227,6 +229,9 @@ public:
 
   /// Private destructor made public to enable python wrapping
   ~qSlicerSubjectHierarchyPluginHandler() override;
+
+  /// Timestamp of the last plugin registration. Used to allow context menus be repopulated if needed.
+  QDateTime LastPluginRegistrationTime;
 
 private:
   Q_DISABLE_COPY(qSlicerSubjectHierarchyPluginHandler);

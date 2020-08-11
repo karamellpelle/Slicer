@@ -20,7 +20,7 @@ This module allows editing segmentation objects by directly drawing and using se
 Representations other than the labelmap one (which is used for editing) are automatically updated real-time,
 so for example the closed surface can be visualized as edited in the 3D view.
 """
-    self.parent.helpText += self.getDefaultModuleDocumentationLink()
+    self.parent.helpText += parent.defaultDocumentationLink
     self.parent.acknowledgementText = """
 This work is part of SparKit project, funded by Cancer Care Ontario (CCO)'s ACRU program
 and Ontario Consortium for Adaptive Interventions in Radiation Oncology (OCAIRO).
@@ -185,11 +185,3 @@ class SegmentEditorTest(ScriptedLoadableModuleTest):
     """
     self.delayDisplay("Starting the test")
     self.delayDisplay('Test passed!')
-
-#
-# Class for avoiding python error that is caused by the method SegmentEditor::setup
-# http://www.na-mic.org/Bug/view.php?id=3871
-#
-class SegmentEditorFileWriter(object):
-  def __init__(self, parent):
-    pass

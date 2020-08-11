@@ -92,7 +92,7 @@ QString qSlicerScriptedFileWriter::pythonSource()const
 }
 
 //-----------------------------------------------------------------------------
-bool qSlicerScriptedFileWriter::setPythonSource(const QString& newPythonSource, const QString& _className)
+bool qSlicerScriptedFileWriter::setPythonSource(const QString& newPythonSource, const QString& _className, bool missingClassIsExpected)
 {
   Q_D(qSlicerScriptedFileWriter);
 
@@ -130,6 +130,11 @@ bool qSlicerScriptedFileWriter::setPythonSource(const QString& newPythonSource, 
   if (PyObject_HasAttrString(module, className.toUtf8()))
     {
     classToInstantiate.setNewRef(PyObject_GetAttrString(module, className.toUtf8()));
+    }
+  else if (missingClassIsExpected)
+    {
+    // Class is not defined for this object, but this is expected, not an error
+    return false;
     }
   if (!classToInstantiate)
     {

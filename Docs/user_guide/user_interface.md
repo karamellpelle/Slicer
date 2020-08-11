@@ -53,13 +53,23 @@ To customize behavior and appearance of the Crosshair, click the "down arrow" bu
 
 ### Mouse Modes
 
-Slicer has two mouse modes: **Transform** (which allows interactive rotate, translate and zoom operations), and **Place** (which permits objects to be interactively placed in slice and 3D views).
+Slicer has multiple mouse modes: **Transform** (which allows interactive rotate, translate and zoom operations), **Window/Level** to adjust brightness/contrast of the image volumes, and **Place** (which permits objects to be interactively placed in slice and 3D views).
 
 ![](https://github.com/Slicer/Slicer/releases/download/docs-resources/user_interface_mousemode_toolbar.png)
 
-The toolbar icons that switch between these mouse modes are shown from left to right above, respectively. Place Fiducial is the default place option as shown above; options to place both Ruler and Region of Interest Widgets are also available from the drop-down Place Mode menu.
+The toolbar icons that switch between these mouse modes are shown from left to right above, respectively. Place Fiducial is the default place option as shown above; options to place other nodes such as Ruler and Region of Interest Widgets are also available from the drop-down Place Mode menu.
 
 > **Note:** Transform mode is the default interaction mode. By default, Place mode persists for one "place" operation after the Place Mode icon is selected, and then the mode switches back to Transform. Place mode can be made persistent (useful for creating multiple fiducial points, rulers, etc.) by checking the Persistent checkbox shown rightmost in the Mouse Mode Toolbar.
+
+#### Adjusting image window/level
+
+Medical images typically contain thousands of gray levels, but regular computer displays can display only 256 gray levels, and the human eye also has limitation in what minimum contrast difference it can notice (see [Kimpe 2007](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3043920/) for more specific information). Therefore, medical images are displayed with adjustable brightness/contrast (window/level).
+
+By default 3D Slicer uses window/level setting that is specified in the DICOM file. If it is not available then window/level is set so that the entire intensity range of the image (except top/bottom 0.1%, to not let a very thin tail of the intensity distribution to decrease the image contrast too much).
+
+Window/level can be manually adjusted anytime by clicking on "Adjust window/level" button on the toolbar then left-click-and-drag in any of the slice viewers. Optimal window/level can be computed for a chosen area by lef-click-and-dragging while holding down <kbd>Ctrl</kbd> key.
+
+[![](https://img.youtube.com/vi/u1B0F1KcVsk/0.jpg)](https://youtu.be/u1B0F1KcVsk "Demo video of how to adjust image window/level")
 
 ### 3D View
 
@@ -84,6 +94,15 @@ View Controllers module provides an alternate way of displaying these controller
 - **Reset field of view** (small square) centers the slice on the current background volume
 - **Link** button synchronizes properties (which volumes are displayed, zoom factor, position of parallel views, opacities, etc.) between all slice views in the same view group. Long-click on the button exposes **hot-linked** option, which controls when properties are synchronized (immediately or when the mouse button is released).
 - **Eye** button in the top row can show the current slice in 3D views. Drop-down menu of the button contains advanced options to customize how this slice is rendered: "...match volume" means that the properties are taken from the full volume, while "...match 2D" means that the properties are copied from the current slice view (for example, copies zoom and pan position). Typically these differences are subtle and the settings can be left at default.
+- **Orientation Selection** displays allows you to choose the orientation for this slice view.
+- **Lightbox** to select a mosiac (a.k.a. contact sheet) view.  Not all operations work in this mode and it may be removed in the future.
+- **Reformat** allows interactive manipulation of the slice orientation.
+- **Blending options** how foreground and background layers are mixed.
+- **Spacing and Field of View** Spacing defines the increment for the slice offset slider.  Field of view sets the zoom level for the slice.
+- **Rotate to Volume Plane** changes the orientation of the slice to match the closest acquisition orientation of the displayed volume
+- **Show Orientation Marker** controls display of human, cube, etc in lower right corner
+- **Ruler** controls display of ruler in slice view
+
 
 ## Mouse & Keyboard Shortcuts
 

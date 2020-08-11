@@ -37,6 +37,9 @@ class Q_SLICER_BASE_QTCORE_EXPORT qSlicerScriptedFileWriter
 {
   Q_OBJECT
 
+  /// This property allows the writer to report back what nodes it was able to write
+  Q_PROPERTY(QStringList writtenNodes READ writtenNodes WRITE setWrittenNodes)
+
 public:
   typedef qSlicerFileWriter Superclass;
   qSlicerScriptedFileWriter(QObject* parent = nullptr);
@@ -45,7 +48,8 @@ public:
   QString pythonSource()const;
 
   /// \warning Setting the source is a no-op. See detailed comment in the source code.
-  bool setPythonSource(const QString& newPythonSource, const QString& className = QLatin1String(""));
+  /// If missingClassIsExpected is true (default) then missing class is expected and not treated as an error.
+  bool setPythonSource(const QString& newPythonSource, const QString& className = QLatin1String(""), bool missingClassIsExpected = true);
 
   /// Convenience method allowing to retrieve the associated scripted instance
   Q_INVOKABLE PyObject* self() const;
@@ -69,6 +73,21 @@ public:
   /// Reimplemented to propagate to python methods
   /// \sa qSlicerFileWriter::write()
   bool write(const qSlicerIO::IOProperties& properties) override;
+
+  /// Added so node writers can report back written nodes
+  /// \sa qSlicerFileWriter::writtenNodex()
+  void addWrittenNode(const QString& writtenNode);
+
+  /// Reimplemented to support python methods and q_property
+  /// Exposes setWrittenNodes, which is protected in superclass
+  /// \sa qSlicerFileWriter::writtenNodes()
+  /// \sa qSlicerFileReader::loadedNodes()
+  QStringList writtenNodes()const override {
+    return Superclass::writtenNodes();
+  };
+  void setWrittenNodes(const QStringList& nodes) override {
+    Superclass::setWrittenNodes(nodes);
+  };
 
 protected:
   QScopedPointer<qSlicerScriptedFileWriterPrivate> d_ptr;

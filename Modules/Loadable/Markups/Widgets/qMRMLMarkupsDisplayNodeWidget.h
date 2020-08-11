@@ -56,6 +56,7 @@ public:
   bool visibility()const;
 
   bool glyphSizeIsAbsolute()const;
+  bool curveLineSizeIsAbsolute()const;
 
   bool pointLabelsVisibility()const;
 
@@ -79,11 +80,17 @@ public slots:
   void setVisibility(bool);
 
   void setGlyphSizeIsAbsolute(bool absolute);
+  void setCurveLineSizeIsAbsolute(bool absolute);
 
   void setPointLabelsVisibility(bool);
 
   void setMaximumMarkupsScale(double maxScale);
   void setMaximumMarkupsSize(double maxScale);
+
+  void setFillVisibility(bool visibility);
+  void setOutlineVisibility(bool visibility);
+  void onFillOpacitySliderWidgetChanged(double opacity);
+  void onOutlineOpacitySliderWidgetChanged(double opacity);
 
 protected slots:
   void updateWidgetFromMRML();
@@ -94,6 +101,8 @@ protected slots:
   void onGlyphTypeComboBoxChanged(QString value);
   void onGlyphScaleSliderWidgetChanged(double value);
   void onGlyphSizeSliderWidgetChanged(double value);
+  void onCurveLineThicknessSliderWidgetChanged(double percentValue);
+  void onCurveLineDiameterSliderWidgetChanged(double value);
   void onTextScaleSliderWidgetChanged(double value);
   void onOpacitySliderWidgetChanged(double value);
   void onInteractionCheckBoxChanged(int state);

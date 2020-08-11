@@ -30,6 +30,7 @@
 #include "qSlicerScriptedLoadableModule.h"
 #include "qSlicerScriptedLoadableModuleWidget.h"
 #include "qSlicerScriptedFileDialog.h"
+#include "qSlicerScriptedFileReader.h"
 #include "qSlicerScriptedFileWriter.h"
 #include "qSlicerScriptedUtils_p.h"
 #include "vtkSlicerScriptedLoadableModuleLogic.h"
@@ -118,6 +119,7 @@ bool qSlicerScriptedLoadableModule::setPythonSource(const QString& newPythonSour
 
   // Extract moduleName from the provided filename
   QString moduleName = QFileInfo(newPythonSource).baseName();
+  this->setName(moduleName);
   QString className = moduleName;
 
   // Get a reference to the main module and global dictionary
@@ -235,14 +237,16 @@ void qSlicerScriptedLoadableModule::registerIO()
   Q_D(qSlicerScriptedLoadableModule);
   QScopedPointer<qSlicerScriptedFileWriter> fileWriter(new qSlicerScriptedFileWriter(this));
   bool ret = fileWriter->setPythonSource(d->PythonSource);
-  if (!ret)
+  if (ret)
     {
-    return;
+    qSlicerApplication::application()->ioManager()->registerIO(fileWriter.take());
     }
-  qSlicerApplication::application()->ioManager()
-    ->registerIO(fileWriter.take());
-
-  // TODO qSlicerScriptedFileReader
+  QScopedPointer<qSlicerScriptedFileReader> fileReader(new qSlicerScriptedFileReader(this));
+  ret = fileReader->setPythonSource(d->PythonSource);
+  if (ret)
+    {
+    qSlicerApplication::application()->ioManager()->registerIO(fileReader.take());
+    }
 }
 
 //-----------------------------------------------------------------------------
