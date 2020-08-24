@@ -54,6 +54,7 @@
 #include "qSlicerSubjectHierarchyAbstractPlugin.h"
 #include "qSlicerSubjectHierarchyDefaultPlugin.h"
 
+
 //------------------------------------------------------------------------------
 qMRMLSubjectHierarchyModelPrivate::qMRMLSubjectHierarchyModelPrivate(qMRMLSubjectHierarchyModel& object)
   : q_ptr(&object)
@@ -291,6 +292,8 @@ void qMRMLSubjectHierarchyModel::setSubjectHierarchyNode(vtkMRMLSubjectHierarchy
     shNode->AddObserver(vtkMRMLSubjectHierarchyNode::SubjectHierarchyItemAboutToBeRemovedEvent, d->CallBack, +10.0);
     shNode->AddObserver(vtkMRMLSubjectHierarchyNode::SubjectHierarchyItemRemovedEvent, d->CallBack, -10.0);
     shNode->AddObserver(vtkMRMLSubjectHierarchyNode::SubjectHierarchyItemModifiedEvent, d->CallBack, -10.0);
+    shNode->AddObserver(vtkMRMLSubjectHierarchyNode::SubjectHierarchyItemTransformModifiedEvent, d->CallBack, -10.0);
+    shNode->AddObserver(vtkMRMLSubjectHierarchyNode::SubjectHierarchyItemDisplayModifiedEvent, d->CallBack, -10.0);
     shNode->AddObserver(vtkMRMLSubjectHierarchyNode::SubjectHierarchyItemReparentedEvent, d->CallBack, -10.0);
     }
 }
@@ -785,10 +788,20 @@ void qMRMLSubjectHierarchyModel::updateFromSubjectHierarchy()
     d->RowCache[d->SubjectHierarchyNode->GetSceneItemID()] = this->subjectHierarchySceneItem()->index();
     }
 
-
   // Get all subject hierarchy items
   std::vector<vtkIdType> allItemIDs;
   d->SubjectHierarchyNode->GetItemChildren(d->SubjectHierarchyNode->GetSceneItemID(), allItemIDs, true);
+
+  // Update all items
+  for (std::vector<vtkIdType>::iterator itemIt=allItemIDs.begin(); itemIt!=allItemIDs.end(); ++itemIt)
+    {
+    vtkIdType itemID = (*itemIt);
+    for (int col=0; col<this->columnCount(); ++col)
+      {
+      QStandardItem* item = this->itemFromSubjectHierarchyItem(itemID, col);
+      this->updateItemFromSubjectHierarchyItem(item, itemID, col);
+      }
+    }
 
   // Update expanded states (during inserting the update calls did not find valid indices, so
   // expand and collapse statuses were not set in the tree view)
@@ -1425,6 +1438,8 @@ void qMRMLSubjectHierarchyModel::onEvent(
       sceneModel->onSubjectHierarchyItemRemoved(itemID);
       break;
     case vtkMRMLSubjectHierarchyNode::SubjectHierarchyItemModifiedEvent:
+    case vtkMRMLSubjectHierarchyNode::SubjectHierarchyItemTransformModifiedEvent:
+    case vtkMRMLSubjectHierarchyNode::SubjectHierarchyItemDisplayModifiedEvent:
     case vtkMRMLSubjectHierarchyNode::SubjectHierarchyItemReparentedEvent:
       sceneModel->onSubjectHierarchyItemModified(itemID);
       break;

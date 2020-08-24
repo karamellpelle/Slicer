@@ -25,6 +25,7 @@ For Slicer-4.10 documentation, refer to the `3D Slicer wiki <https://www.slicer.
    user_guide/image_segmentation
    user_guide/modules/index.rst
    user_guide/extension_manager
+   user_guide/supported_data_formats
    user_guide/settings
 
 .. toctree::
@@ -34,6 +35,7 @@ For Slicer-4.10 documentation, refer to the `3D Slicer wiki <https://www.slicer.
    developer_guide/build_instructions/index.rst
    developer_guide/api
    developer_guide/mrml_overview
+   developer_guide/modules/index.rst
    developer_guide/extensions
    developer_guide/python_faq
    developer_guide/contributing

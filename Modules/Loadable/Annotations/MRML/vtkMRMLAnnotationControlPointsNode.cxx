@@ -115,7 +115,7 @@ WriteCLI(std::vector<std::string>& commandLine, std::string prefix,
       vtkWarningMacro("WriteCLI - Ignoring 'multipleFlag' and writing all "
                       << n << " points for annotation " << this->GetID()
                       << ". For more details see "
-                      << "http://www.na-mic.org/Bug/view.php?id=1910");
+                      << "https://github.com/Slicer/Slicer/issues/1910");
       }
 
     std::stringstream ss;
@@ -130,12 +130,12 @@ WriteCLI(std::vector<std::string>& commandLine, std::string prefix,
         {
         ss << ",";
         }
-      if (coordinateSystem == 0)
+      if (coordinateSystem == vtkMRMLStorageNode::CoordinateSystemRAS)
         {
         // RAS
         ss << ptr[0] << "," <<  ptr[1] << "," <<  ptr[2] ;
         }
-      else if (coordinateSystem == 1)
+      else if (coordinateSystem == vtkMRMLStorageNode::CoordinateSystemLPS)
         {
         // LPS
         double lps[3];

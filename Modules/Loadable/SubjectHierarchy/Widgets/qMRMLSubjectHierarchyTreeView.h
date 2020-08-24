@@ -227,9 +227,10 @@ protected slots:
   /// (e.g. after tree was updated in the model from the subject hierarchy)
   virtual void updateRootItem();
 
-  /// Propagate item modified signal if the item or an item in its branch
-  /// was selected in that treeview
+  /// Propagate item modified event
   virtual void onSubjectHierarchyItemModified(vtkObject *caller, void *callData);
+  /// Propagate item transform modified event
+  virtual void onSubjectHierarchyItemTransformModified(vtkObject *caller, void *callData);
 
   /// Called when scene end is finished. Hierarchy is cleared in that case.
   virtual void onMRMLSceneCloseEnded(vtkObject* sceneObject);
@@ -278,6 +279,8 @@ protected:
   /// Return the id of the first subject hierarchy item that is found to be selected
   /// within the branch that has the input item id as its root
   vtkIdType firstSelectedSubjectHierarchyItemInBranch(vtkIdType itemID);
+
+  void changeEvent(QEvent* e) override;
 
 protected:
   QScopedPointer<qMRMLSubjectHierarchyTreeViewPrivate> d_ptr;

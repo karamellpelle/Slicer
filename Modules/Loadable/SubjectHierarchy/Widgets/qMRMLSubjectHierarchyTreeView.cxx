@@ -87,6 +87,8 @@ public:
   vtkMRMLTransformNode* appliedTransformToItem(vtkIdType itemID, bool& commonToAllChildren);
   vtkMRMLTransformNode* firstAppliedTransformToSelectedItems();
 
+  void updateColors();
+
 public:
   qMRMLSubjectHierarchyModel* Model;
   qMRMLSortFilterSubjectHierarchyProxyModel* SortFilterModel;
@@ -139,6 +141,11 @@ public:
 
   /// Timestamp of the last update of the context menus. Used to make sure the context menus are always up to date
   QDateTime LastContextMenuUpdateTime;
+
+  QColor IndirectReferenceColor;
+  QColor DirectReferenceColor;
+  QColor ReferencingColor;
+  QColor TransformReferenceColor;
 };
 
 //------------------------------------------------------------------------------
@@ -217,6 +224,8 @@ void qMRMLSubjectHierarchyTreeViewPrivate::init()
   this->VisibilityMenu = new QMenu(q);
   this->VisibilityMenu->setObjectName("visibilityMenuTreeView");
 
+  this->updateColors();
+
   // Set item delegate for color column
   q->setItemDelegateForColumn(this->Model->colorColumn(), new qSlicerTerminologyItemDelegate(q));
 
@@ -254,7 +263,6 @@ void qMRMLSubjectHierarchyTreeViewPrivate::init()
 
   this->TransformActionGroup = new QActionGroup(this->TransformMenu);
   this->TransformActionGroup->addAction(this->NoTransformAction);
-
 
   q->setContextMenuPolicy(Qt::CustomContextMenu);
   QObject::connect(q, SIGNAL(customContextMenuRequested(const QPoint&)), q, SLOT(onCustomContextMenu(const QPoint&)));
@@ -520,6 +528,29 @@ vtkMRMLTransformNode* qMRMLSubjectHierarchyTreeViewPrivate::firstAppliedTransfor
 }
 
 //------------------------------------------------------------------------------
+void qMRMLSubjectHierarchyTreeViewPrivate::updateColors()
+{
+  Q_Q(qMRMLSubjectHierarchyTreeView);
+  QColor textColor = q->palette().color(QPalette::Normal, QPalette::Text);
+  if (textColor.lightnessF() < 0.5)
+    {
+    // Dark text (light background)
+    this->IndirectReferenceColor = QColor::fromRgb(255, 255, 170);
+    this->DirectReferenceColor = Qt::yellow;
+    this->TransformReferenceColor = this->DirectReferenceColor;
+    this->ReferencingColor = QColor::fromRgb(69, 204, 69);
+    }
+  else
+    {
+    // Light text (darker background needed)
+    this->IndirectReferenceColor = QColor::fromRgb(50, 50, 5);
+    this->DirectReferenceColor = QColor::fromRgb(100, 100, 10);
+    this->TransformReferenceColor = this->DirectReferenceColor;
+    this->ReferencingColor = QColor::fromRgb(8, 80, 27);
+    }
+}
+
+//------------------------------------------------------------------------------
 // qMRMLSubjectHierarchyTreeView
 //------------------------------------------------------------------------------
 qMRMLSubjectHierarchyTreeView::qMRMLSubjectHierarchyTreeView(QWidget *parent)
@@ -542,6 +573,8 @@ void qMRMLSubjectHierarchyTreeView::setSubjectHierarchyNode(vtkMRMLSubjectHierar
 
   qvtkReconnect( shNode, vtkMRMLSubjectHierarchyNode::SubjectHierarchyItemModifiedEvent,
                  this, SLOT( onSubjectHierarchyItemModified(vtkObject*,void*) ) );
+  qvtkReconnect( shNode, vtkMRMLSubjectHierarchyNode::SubjectHierarchyItemTransformModifiedEvent,
+                 this, SLOT( onSubjectHierarchyItemTransformModified(vtkObject*,void*) ) );
 
   if (!shNode)
     {
@@ -1197,7 +1230,7 @@ void qMRMLSubjectHierarchyTreeView::onSelectionChanged(const QItemSelection& sel
   // Cache selected item(s) so that currentItem and currentItems can return them quickly
   d->SelectedItems = selectedShItems;
 
-  // Highlight items referenced by DICOM in case of single-selection
+  // Highlight items referenced by DICOM or node reference
   //   Referenced SOP instance UIDs (in attribute named vtkMRMLSubjectHierarchyConstants::GetDICOMReferencedInstanceUIDsAttributeName())
   //   -> SH item instance UIDs (serialized string lists in subject hierarchy UID vtkMRMLSubjectHierarchyConstants::GetDICOMInstanceUIDName())
   if (this->highlightReferencedItems())
@@ -1851,7 +1884,7 @@ void qMRMLSubjectHierarchyTreeView::applyReferenceHighlightForItems(QList<vtkIdT
         QStandardItem* item = sceneModel->itemFromSubjectHierarchyItem(referencedItem, nameColumn);
         if (item && !d->HighlightedItems.contains(referencedItem))
           {
-          item->setBackground(QColor::fromRgb(255, 255, 170));
+          item->setBackground(d->IndirectReferenceColor);
           d->HighlightedItems.append(referencedItem);
           }
         }
@@ -1864,7 +1897,7 @@ void qMRMLSubjectHierarchyTreeView::applyReferenceHighlightForItems(QList<vtkIdT
       QStandardItem* item = sceneModel->itemFromSubjectHierarchyItem(referencedItem, nameColumn);
       if (item) // Note: these items have been added as the recursively referenced items already
         {
-        item->setBackground(Qt::yellow);
+        item->setBackground(d->DirectReferenceColor);
         }
       }
     // Highlight referencing items
@@ -1874,7 +1907,7 @@ void qMRMLSubjectHierarchyTreeView::applyReferenceHighlightForItems(QList<vtkIdT
       QStandardItem* item = sceneModel->itemFromSubjectHierarchyItem(referencingItem, nameColumn);
       if (item && !d->HighlightedItems.contains(referencingItem))
         {
-        item->setBackground(QColor::fromRgb(69, 204, 69));
+        item->setBackground(d->ReferencingColor);
         d->HighlightedItems.append(referencingItem);
         }
       }
@@ -1969,14 +2002,6 @@ void qMRMLSubjectHierarchyTreeView::onSubjectHierarchyItemModified(vtkObject *ca
     itemID = *itemIdPtr;
     }
 
-  // Highlight items referenced by DICOM in case of single-selection
-  //   Referenced SOP instance UIDs (in attribute named vtkMRMLSubjectHierarchyConstants::GetDICOMReferencedInstanceUIDsAttributeName())
-  //   -> SH item instance UIDs (serialized string lists in subject hierarchy UID vtkMRMLSubjectHierarchyConstants::GetDICOMInstanceUIDName())
-  if (this->highlightReferencedItems() && d->SelectedItems.count() == 1)
-    {
-    this->applyReferenceHighlightForItems(d->SelectedItems);
-    }
-
   // Forward `currentItemModified` if the modified item or one of
   // its children was selected, to adequately update other widgets
   // that use that modified item such as qMRMLSubjectHierarchyComboBox
@@ -1984,6 +2009,67 @@ void qMRMLSubjectHierarchyTreeView::onSubjectHierarchyItemModified(vtkObject *ca
   if (selectedId != vtkMRMLSubjectHierarchyNode::INVALID_ITEM_ID)
     {
     emit currentItemModified(selectedId);
+    }
+}
+
+//-----------------------------------------------------------------------------
+void qMRMLSubjectHierarchyTreeView::onSubjectHierarchyItemTransformModified(vtkObject *caller, void *callData)
+{
+  Q_D(qMRMLSubjectHierarchyTreeView);
+  Q_UNUSED(callData);
+
+  vtkMRMLSubjectHierarchyNode* shNode = vtkMRMLSubjectHierarchyNode::SafeDownCast(caller);
+  if (!shNode)
+    {
+    qCritical() << Q_FUNC_INFO << ": Failed to access subject hierarchy node";
+    return;
+    }
+
+  qMRMLSubjectHierarchyModel* sceneModel = qobject_cast<qMRMLSubjectHierarchyModel*>(this->model());
+  int nameColumn = sceneModel->nameColumn();
+
+  // Update highlighting based on associated transforms
+  // Note: applyReferenceHighlightForItems does not work here because the transform modified event is
+  //       invoked before the scene updates the cached node references
+  if (this->highlightReferencedItems())
+    {
+    // Remove highlighting from all transforms
+    std::vector<vtkMRMLNode*> transformNodes;
+    this->mrmlScene()->GetNodesByClass("vtkMRMLTransformNode", transformNodes);
+    for (std::vector<vtkMRMLNode*>::iterator it = transformNodes.begin(); it != transformNodes.end(); ++it)
+      {
+      vtkMRMLTransformNode* transformNode = vtkMRMLTransformNode::SafeDownCast(*it);
+      if (transformNode && !transformNode->GetHideFromEditors())
+        {
+        vtkIdType transformItem = shNode->GetItemByDataNode(transformNode);
+        QStandardItem* item = sceneModel->itemFromSubjectHierarchyItem(transformItem, nameColumn);
+        if (item)
+          {
+          item->setBackground(Qt::transparent);
+          }
+        d->HighlightedItems.removeAt(d->HighlightedItems.indexOf(transformItem));
+        }
+      }
+
+    foreach (vtkIdType itemID, d->SelectedItems)
+      {
+      vtkMRMLTransformableNode* node = vtkMRMLTransformableNode::SafeDownCast(shNode->GetItemDataNode(itemID));
+      if (node == nullptr)
+        {
+        continue;
+        }
+      vtkMRMLTransformNode* transformNode = node->GetParentTransformNode();
+      if (transformNode)
+        {
+        vtkIdType transformItem = shNode->GetItemByDataNode(transformNode);
+        QStandardItem* item = sceneModel->itemFromSubjectHierarchyItem(transformItem, nameColumn);
+        if (item)
+          {
+          item->setBackground(Qt::yellow);
+          }
+        d->HighlightedItems.append(transformItem);
+        }
+      }
     }
 }
 
@@ -2197,4 +2283,24 @@ void qMRMLSubjectHierarchyTreeView::onCustomContextMenu(const QPoint& point)
     {
     d->NodeMenu->exec(globalPoint);
     }
+}
+
+//---------------------------------------------------------------------------
+void qMRMLSubjectHierarchyTreeView::changeEvent(QEvent* e)
+{
+  Q_D(qMRMLSubjectHierarchyTreeView);
+  switch (e->type())
+    {
+    case QEvent::PaletteChange:
+      {
+      d->updateColors();
+      QItemSelection selected;
+      QItemSelection deselected;
+      this->onSelectionChanged(selected, deselected);
+      break;
+      }
+    default:
+      break;
+    }
+  QTreeView::changeEvent(e);
 }
